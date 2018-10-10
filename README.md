@@ -34,6 +34,7 @@ GRANT ALL ON conference_system.* TO 'cs_root'@'localhost';
 source myvenv/bin/activate or myvenv\Scripts\activate
 python manage.py makemigrations
 python manage.py migrate
+python manage.py runscript initialize
 python manage.py runserver
 
 ```

@@ -16,8 +16,17 @@ def detail(request, payment_id):
 
 def start(request, payment_id):
     payment = get_object_or_404(Payment, pk = payment_id)
+    started = True
+    payment.save()
     return render(request, 'payment/start.html', {'payment':payment})
 
 def status(request, payment_id):
     payment = get_object_or_404(Payment, pk = payment_id)
     return render(request, 'payment/status.html', {'payment':payment})
+
+def approval(request, payment_id):
+    payment = get_object_or_404(Payment, pk = payment_id)
+    payment.started = False
+    payment.approved = True
+    payment.save()
+    return HttpResponseRedirect(reverse('payment:status', args = (payment_id,)))

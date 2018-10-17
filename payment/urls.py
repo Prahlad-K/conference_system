@@ -12,4 +12,6 @@ urlpatterns = [
     path('<int:payment_id>/start/', views.start, name='start'),
 
     path('<int:payment_id>/status/', views.status, name='status'),
+
+    path('<int:payment_id>/approval/', views.approval, name='approval'),
 ]

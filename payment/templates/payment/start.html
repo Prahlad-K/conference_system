@@ -3,9 +3,13 @@
     {{payment}}
 </h1>
 
-{% if payment.started %}
-<p> The payment {{payment.id}}is started</p>
+<form action = "{% url 'payment:approval' payment.id %}" method = "post">
 
-{% elsif payment.%}
-<p>The payment has already begun.</p>
-{% endif %}
+ {% csrf_token %}
+<p> 
+    Awaiting approval from the registration manager.
+</p>
+
+<input id = "approve" type="submit" value="Approve">
+
+</form>

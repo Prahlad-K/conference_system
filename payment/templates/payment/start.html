@@ -1,0 +1,11 @@
+
+<h1>
+    {{payment}}
+</h1>
+
+{% if payment.started %}
+<p> The payment {{payment.id}}is started</p>
+
+{% elsif payment.%}
+<p>The payment has already begun.</p>
+{% endif %}

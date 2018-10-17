@@ -1,0 +1,13 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+
+{% if list_of_payments %}
+<ul>
+    {% for payment in list_of_payments %}
+        <li><a href = "{% url 'payment:detail' payment.id %}">{{payment.paymentDetails}}</a></li>
+    {% endfor %}
+</ul>
+{% else %}
+    <p>No payment are made yet!</p>
+{% endif %}

@@ -1,0 +1,14 @@
+<h1>
+    {{payment}}
+</h1>
+
+{% if not payment.started %}
+<p> The payment {{payment.id}} has been started</p>
+{% elif not payment.approved %}
+<p> The payment {{payment.id}} has been approved</p>
+{% elif not payment.ongoing %}
+<p> The payment {{payment.id}} has been ongoing</p>
+{% else %}
+<p> The payment {{payment.id}} has completed</p>
+
+{% endif %}

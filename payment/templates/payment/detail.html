@@ -1,0 +1,10 @@
+<h1>
+    {{ payment }}
+</h1>
+
+{% if error_message %}<p> <strong>{{ error_message }}</strong> </p>{% endif %}
+
+<p>
+    {{payment.paymentDetails}}<br>
+    As done on:  {{payment.payment_date}}
+</p>

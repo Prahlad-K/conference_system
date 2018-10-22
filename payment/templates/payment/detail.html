@@ -1,10 +1,17 @@
 <h1>
-    {{ payment }}
+   Payment Portal
 </h1>
 
-{% if error_message %}<p> <strong>{{ error_message }}</strong> </p>{% endif %}
+<!--{% if error_message %}<p> <strong>{{ error_message }}</strong> </p>{% endif %}-->
 
 <p>
-    {{payment.paymentDetails}}<br>
-    As done on:  {{payment.payment_date}}
+    Please enter your payment details:<br>
+
+    <form action = "" method ="post">
+        {%csrf_token%}
+    <label for="payment.id">Credit Card Number:</label>
+    <input id = "payment.id" name = "payment.credit_card_no" type="text" required>
+    <input type = "submit" value = "OK">
+    </form>
+
 </p>

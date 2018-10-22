@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
+from payment.forms import collectPaymentForm
+
 from payment.models import Payment
 
 # Create your views here.
@@ -12,6 +14,14 @@ def index(request):
 
 def detail(request, payment_id):
     payment = get_object_or_404(Payment, pk = payment_id)
+    
+    if request.method == 'POST':
+        credit_card_form = collectPaymentForm(request.POST)
+        if credit_card_form.is_valid():
+            payment.credit_card_no = credit_card_form.cleaned_data['credit_card_no']
+            payment.save()
+        #return HttpResponseRedirect(reverse('payment:status', args = (payment_id,)))
+
     return render(request, 'payment/detail.html', {'payment':payment})
 
 def start(request, payment_id):

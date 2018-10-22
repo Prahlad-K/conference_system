@@ -1,13 +1,30 @@
 {% load static %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
-
-{% if list_of_payments %}
-<ul>
-    {% for payment in list_of_payments %}
-        <li><a href = "{% url 'payment:detail' payment.id %}">{{payment.paymentDetails}}</a></li>
-    {% endfor %}
-</ul>
-{% else %}
-    <p>No payment are made yet!</p>
-{% endif %}
+<h1>
+    Payment Portal
+ </h1>
+ 
+ <!--{% if error_message %}<p> <strong>{{ error_message }}</strong> </p>{% endif %}-->
+ 
+ <p>
+     Please enter your payment details:<br>
+ 
+     <form action = "" method ="post">
+         {%csrf_token%}
+     <label for="credit_card_no">Credit Card Number:</label>
+     <input id = "credit_card_no" name = "credit_card_no" type="text" required>
+     <br>
+     <label for="amount">Amount:</label>
+     <input id = "amount" name = "amount" type="text" required>
+     <br>
+     <label for="paymentDetails">Payment Details: </label>
+     <input id = "paymentDetails" name = "paymentDetails" type="text" required>
+     <br>
+     <label for="payment_date">Payment date:</label>
+     <input id = "payment_date" name = "payment_date" type="text" required>
+     <br>
+     <input type = "submit" value = "OK">
+     </form>
+ 
+ </p>
+ 

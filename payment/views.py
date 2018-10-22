@@ -8,9 +8,20 @@ from payment.models import Payment
 
 # Create your views here.
 def index(request):
-    list_of_payments = Payment.objects.order_by('-payment_date')[:5]
-    context = {'list_of_payments' : list_of_payments}
-    return render(request, 'payment/index.html', context)
+    
+    if request.method == 'POST':
+        credit_card_form = collectPaymentForm(request.POST)
+        if credit_card_form.is_valid():
+            payment = Payment()
+            payment.credit_card_no = credit_card_form.cleaned_data['credit_card_no']
+            payment.amount = credit_card_form.cleaned_data['amount']
+            payment.paymentDetails = credit_card_form['paymentDetails']
+            payment.payment_date = credit_card_form['payment_date']
+
+            payment.save()
+        #return HttpResponseRedirect(reverse('payment:status', args = (payment_id,)))
+
+    return render(request, 'payment/index.html')
 
 def detail(request, payment_id):
     payment = get_object_or_404(Payment, pk = payment_id)

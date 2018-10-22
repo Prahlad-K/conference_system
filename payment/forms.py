@@ -11,8 +11,8 @@ class collectPaymentForm(forms.Form):
     def clean_credit_card_no(self):
         data = self.cleaned_data['credit_card_no']
 
-        if len(data) < 16:
-            raise ValidationError(_('Invalid credit card number'))
+       # if len(data) < 16:
+           # raise ValidationError(_('Invalid credit card number'))
 
         return data
 
@@ -20,24 +20,24 @@ class collectPaymentForm(forms.Form):
     def clean_amount(self):
         data = self.cleaned_data['amount']
 
-        if len(data) < 16:
-            raise ValidationError(_('Invalid amount'))
+      #  if len(data) < 16:
+         #   raise ValidationError(_('Invalid amount'))
 
         return data
     
     def clean_paymentDetails(self):
         data = self.cleaned_data['paymentDetails']
 
-        if len(data) < 16:
-            raise ValidationError(_('Invalid payment details'))
+       # if len(data) < 16:
+           ## raise ValidationError(_('Invalid payment details'))
 
         return data
     
     def clean_payment_date(self):
         data = self.cleaned_data['payment_date']
 
-        if len(data) < 16:
-            raise ValidationError(_('Invalid payment date'))
+       # if len(data) < 16:
+         #   raise ValidationError(_('Invalid payment date'))
 
         return data
     

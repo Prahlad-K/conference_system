@@ -1,7 +1,9 @@
 from django.shortcuts import render
-
+from django.contrib.auth import authenticate,login,logout
+from django.shortcuts import get_object_or_404, render, redirect
+from authentication.models import CustomUser
+from django.http import HttpResponse
 # Create your views here.
-urlpatterns = [
-    path('', views.index, name='index'),
-    path('sign_in', views.sign_in, name='sign_in'),
-]
+
+def index(request):
+    return HttpResponse("<p>Admin</p>")

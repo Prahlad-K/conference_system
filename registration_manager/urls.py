@@ -11,4 +11,5 @@ urlpatterns = [
     path('payment/<int:payment_id>/wait', views.wait, name='wait'),
     path('payment/<int:payment_id>/approve', views.approve, name='approve'),
     path('payment/<int:payment_id>/complete', views.complete, name='complete'),
+    path('payment/<int:payment_id>/delete', views.delete, name = 'delete'),
 ]

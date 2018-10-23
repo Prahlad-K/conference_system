@@ -1,0 +1,32 @@
+{% extends 'registration_manager/template.html' %}
+
+{% load static %}
+{% block content %}
+<div style = "padding-left: 20px;">
+{% if payments %}
+
+<h2>Here are the list of payments:</h2>
+<br>
+
+{% for payment in payments %}
+
+<p> <strong>{{ payment.amount}} </strong> to be paid by <strong>{{payment.user}}</strong> as on <strong>{{payment.payment_date}}</strong> and the payment
+
+{% if payment.started %}
+has started. </p>
+{% elif payment.ongoing %}
+ is ongoing. <a href = "{% url 'registration_manager:approve' payment.id %}">Approve? </a> </p>
+{% elif payment.approved %}
+is approved. </p>
+{% elif payment.completed %}
+ is completed. </p>
+{% endif %}
+{% endfor %}
+
+{% else %}
+There are no payments made yet.
+
+{% endif %}
+
+</div>
+{% endblock %}

@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>Registration Manager</title>
   </head>
   <body>
 
@@ -20,7 +20,6 @@
 
 {{payment.credit_card_no}} <br>
 {{payment.amount}}<br>
-{{payment}}<br>
 {{payment.payment_date}}<br>
 
 <form action= "{% url 'registration_manager:wait' payment.id %}" method="post">
@@ -33,20 +32,19 @@
 {% elif payment.ongoing %}
 <h1>Processing....</h1>
 
-<form action= "{% url 'registration_manager:approve' payment.id %}" method="post">
+<form action= "{% url 'registration_manager:index' %}" method="post">
         {% csrf_token %}
         <input type = "submit" value = "Wait for approval">
 </form>
     
 
 {% elif payment.approved %}
-<h1>Your payment has been approved by the registration manager!</h1>
+<h1>The following payment has been approved by the registration manager!</h1>
 
 <h2>Please wait while the transaction is completed.</h2>
 
 {{payment.credit_card_no}} <br>
 {{payment.amount}}<br>
-{{payment}}<br>
 {{payment.payment_date}}<br>
 
 <form action= "{% url 'registration_manager:complete' payment.id %}" method="post">
@@ -55,7 +53,7 @@
 </form>
 
 {% else %}
-<h1>Your payment is successful! Thank you for joining us to the conference.</h1>
+<h1>The payment was successful! Thank you for joining us to the conference.</h1>
 
 <form action= "{% url 'registration_manager:index' %}" method="post">
         {% csrf_token %}

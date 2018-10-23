@@ -10,6 +10,10 @@ from registration_manager.models import Payment
 
 # Create your views here.
 
+def display(request):
+    payments = Payment.objects.all()
+    return render(request, 'registration_manager/display.html', {'payments':payments})
+
 def index(request):
     payment = Payment()
     if request.method == 'POST':
@@ -18,7 +22,7 @@ def index(request):
         if credit_card_form.is_valid():
             payment.credit_card_no = credit_card_form.cleaned_data['credit_card_no']
             payment.amount = credit_card_form.cleaned_data['amount']
-            payment.user_details = credit_card_form.cleaned_data['user_details']
+            payment.user = request.user
             payment.payment_date = credit_card_form.cleaned_data['payment_date']
             payment.started = True
             payment.save()

@@ -47,4 +47,83 @@ def add_user(request):
         return render(request, 'conference_manager/add_user.html', {})
 
 def view_users(request):
-    return render(request, 'conference_manager/view_users.html', {})
+    users = CustomUser.objects.all()
+    for user in users:
+        user.r = user.roles.all()
+        print(user.r)
+    response = {}
+    response['users'] = users
+    print(users)
+    return render(request, 'conference_manager/view_users.html', response)
+
+def view_user(request, username):
+    if request.method == "GET":
+        try: 
+            user = CustomUser.objects.get(username=username)
+            user.r = user.roles.all()
+            all_roles = Role.objects.all()
+            not_assigned_roles = []
+            for role in all_roles:
+                if role not in user.r:
+                    not_assigned_roles.append(role)
+            print(not_assigned_roles)
+            response = {}
+            response['user'] = user
+            response['not_assigned_roles'] = not_assigned_roles
+            return render(request, 'conference_manager/view_user.html', response)
+        except:
+            return view_users(request)
+
+    elif request.method == "POST":
+        try: 
+            print(request.POST)
+            user = CustomUser.objects.get(username=username)
+            user.first_name = request.POST['first_name']
+            user.last_name = request.POST['last_name']
+            user.email = request.POST['email']
+            user.username = request.POST['username']
+            user.roles.clear()
+            try:
+                value = request.POST['Author']
+                user.roles.add(Role.objects.get(id=1))
+            except:
+                pass
+            try:
+                value = request.POST['Reviewer']
+                user.roles.add(Role.objects.get(id=2))
+            except:
+                pass
+            try:
+                value = request.POST['Track Chair']
+                user.roles.add(Role.objects.get(id=3))
+            except:
+                pass
+            try:
+                value = request.POST['Conference Chair']
+                user.roles.add(Role.objects.get(id=4))
+            except:
+                pass
+            try:
+                value = request.POST['Registration Manager']
+                user.roles.add(Role.objects.get(id=5))
+            except:
+                pass
+            try:
+                value = request.POST['Conference Manager']
+                user.roles.add(Role.objects.get(id=6))
+            except:
+                pass
+            user.save()
+            user.r = user.roles.all()
+            all_roles = Role.objects.all()
+            not_assigned_roles = []
+            for role in all_roles:
+                if role not in user.r:
+                    not_assigned_roles.append(role)
+            response = {}
+            response['user'] = user
+            response['not_assigned_roles'] = not_assigned_roles
+            response['success'] = True
+            return render(request, 'conference_manager/view_user.html', response)
+        except:
+            return view_users(request)

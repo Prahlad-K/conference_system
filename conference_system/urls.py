@@ -19,10 +19,10 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('authentication.urls', namespace="authentication")),
-    path('author', include('author.urls', namespace="author")),
-    path('reviewer', include('reviewer.urls', namespace="reviewer")),
-    path('track_chair', include('track_chair.urls', namespace="track_chair")),
-    path('conference_chair', include('conference_chair.urls', namespace="conference_chair")),
-    path('registration_manager', include('registration_manager.urls', namespace="registration_manager")),
-    path('conference_manager', include('conference_manager.urls', namespace="conference_manager")),
+    path('author/', include('author.urls', namespace="author")),
+    path('reviewer/', include('reviewer.urls', namespace="reviewer")),
+    path('track_chair/', include('track_chair.urls', namespace="track_chair")),
+    path('conference_chair/', include('conference_chair.urls', namespace="conference_chair")),
+    path('registration_manager/', include('registration_manager.urls', namespace="registration_manager")),
+    path('conference_manager/', include('conference_manager.urls', namespace="conference_manager")),
 ]

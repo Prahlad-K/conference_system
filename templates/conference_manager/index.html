@@ -1,0 +1,22 @@
+{% extends 'conference_manager/template.html' %}
+
+{% load static %}
+{% block content %}
+<div class="container">
+        <div class="row">
+          <div class="col">
+
+          </div>
+          <div class="col-8">
+                <a href="{% url 'conference_manager:view_tracks' %}" class="btn btn-outline-secondary text-center" role="button">View Tracks</a>
+                <a href="{% url 'conference_manager:create_track' %}" class="btn btn-outline-secondary text-center" role="button">Create a Track</a>
+                <a href="{% url 'conference_manager:add_user' %}" class="btn btn-outline-secondary text-center" role="button">Add User</a>
+                <a href="{% url 'conference_manager:view_users' %}" class="btn btn-outline-secondary text-center" role="button">View Users</a>
+          </div>
+          <div class="col">
+            
+          </div>
+        </div>
+
+</div>
+{% endblock %}

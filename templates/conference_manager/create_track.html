@@ -1,0 +1,61 @@
+{% extends 'conference_manager/template.html' %}
+
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+
+        </div>
+        <div class="col-8">
+            <div class="container-fluid" style="margin-top:10%;">
+                    <form action="{% url 'conference_manager:create_track' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <label for="author" class="col-sm-2 col-form-label">Author</label>
+                                <div class="col-sm-10">
+                                        <select class="form-control" name="author" required>
+                                            {% for author in authors %}
+                                                <option value={{author.username}}>{{ author.first_name}} {{ author.last_name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                </div>
+                                    
+                            </div>
+                            <br>
+                            <div class="form-group row">
+                                    <label for="author" class="col-sm-2 col-form-label">Reviewer</label>
+                                    <div class="col-sm-10">
+                                            <select class="form-control" name="reviewer" required>
+                                                {% for reviewer in reviewers %}
+                                                    <option value={{reviewer.username}}>{{ reviewer.first_name}} {{ reviewer.last_name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                    </div>
+                                        
+                                </div>
+                                <br>
+                                <div class="form-group row">
+                                        <label for="author" class="col-sm-2 col-form-label">Track Chair</label>
+                                        <div class="col-sm-10">
+                                                <select class="form-control" name="track_chair" required>
+                                                    {% for track_chair in track_chairs %}
+                                                        <option value={{track_chair.username}}>{{ track_chair.first_name}} {{ track_chair.last_name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                        </div>
+                                            
+                                    </div>
+                                    <div class="text-center"> 
+                                    <button type="submit" class="btn btn-secondary">Create Track</button>
+                                    </div>
+                    </form>
+            </div>
+        </div>
+        <div class="col">
+        
+        </div>
+    </div>
+</div>
+{% endblock %}

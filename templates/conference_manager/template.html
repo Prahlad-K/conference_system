@@ -12,11 +12,31 @@
   </head>
   <body>
         <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+                <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'conference_manager:view_tracks' %}">View Tracks</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'conference_manager:create_track' %}">Create Track</a>
+                        </li>
+                    </ul>
+                </div>
                 <div class="mx-auto order-0">
                     <a class="navbar-brand mx-auto" href="#">Conference Manager</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
                         <span class="navbar-toggler-icon"></span>
                     </button>
+                </div>
+                <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'conference_manager:add_user' %}">Add User</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'conference_manager:view_users' %}">View Users</a>
+                        </li>
+                    </ul>
                 </div>
             </nav>
 

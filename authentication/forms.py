@@ -26,7 +26,7 @@ class CustomUserCreationForm(UserCreationForm):
     )
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = ('username', 'email')
+        fields = ('username', 'email', 'password')
 
 class CustomUserChangeForm(UserChangeForm):
     roles = forms.MultipleChoiceField(
@@ -36,4 +36,4 @@ class CustomUserChangeForm(UserChangeForm):
     )
     class Meta:
         model = CustomUser
-        fields = ('username', 'email')
+        fields = ('username', 'email', 'first_name', 'last_name')

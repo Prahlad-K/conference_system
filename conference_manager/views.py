@@ -25,12 +25,24 @@ def create_track(request):
         author = CustomUser.objects.get(username = request.POST['author'])
         reviewer = CustomUser.objects.get(username = request.POST['reviewer'])
         track_chair = CustomUser.objects.get(username = request.POST['track_chair'])
-        track = Track.objects.create(author = author, reviewer = reviewer, track_chair = track_chair)
+        track = Track.objects.create(author = author, reviewer = reviewer, track_chair = track_chair, description = request.POST['description'])
+        authors = CustomUser.objects.filter(roles__id = 1)
+        reviewers = CustomUser.objects.filter(roles__id = 2)
+        track_chairs = CustomUser.objects.filter(roles__id = 3)
         print(track)
-        return render(request, 'conference_manager/create_track.html', {})
+        response = {
+            'success': True,
+            'authors': authors,
+            'reviewers': reviewers,
+            'track_chairs': track_chairs,
+        }
+        return render(request, 'conference_manager/create_track.html', response)
 
 def view_tracks(request):
-    return render(request, 'conference_manager/view_tracks.html', {})
+    tracks = Track.objects.all()
+    response = {}
+    response['tracks'] = tracks
+    return render(request, 'conference_manager/view_tracks.html', response)
 
 def add_user(request):
     if request.method == "GET":
@@ -44,7 +56,12 @@ def add_user(request):
         u.set_password(request.POST['password'])
         u.save()
         u.roles.add(Role.objects.get(id = request.POST['role']))
-        return render(request, 'conference_manager/add_user.html', {})
+        roles = Role.objects.all()
+        response = {
+            'success': True,
+            'roles': roles
+        }
+        return render(request, 'conference_manager/add_user.html', response)
 
 def view_users(request):
     users = CustomUser.objects.all()
@@ -127,3 +144,50 @@ def view_user(request, username):
             return render(request, 'conference_manager/view_user.html', response)
         except:
             return view_users(request)
+
+def view_track(request, pk):
+    if request.method == "GET":
+        track = Track.objects.get(pk = pk)
+        authors = CustomUser.objects.filter(roles__id = 1)
+        reviewers = CustomUser.objects.filter(roles__id = 2)
+        track_chairs = CustomUser.objects.filter(roles__id = 3)
+        response = {
+            'track': track,
+            'authors': authors, 
+            'reviewers': reviewers,
+            'track_chairs': track_chairs
+        }
+        return render(request, 'conference_manager/view_track.html', response)
+    elif request.method == "POST":
+        print(request.POST)
+        track = Track.objects.get(pk = pk)
+        track.author = CustomUser.objects.get(username=request.POST['author'])
+        track.reviewer = CustomUser.objects.get(username=request.POST['reviewer'])
+        track.track_chair = CustomUser.objects.get(username=request.POST['track_chair'])
+        track.description = request.POST['description']
+        track.save()
+        authors = CustomUser.objects.filter(roles__id = 1)
+        reviewers = CustomUser.objects.filter(roles__id = 2)
+        track_chairs = CustomUser.objects.filter(roles__id = 3)
+        response = {
+            'track': track,
+            'authors': authors, 
+            'reviewers': reviewers,
+            'track_chairs': track_chairs,
+            'success': True
+        }
+        return render(request, 'conference_manager/view_track.html', response)
+
+def delete_track(request, pk):
+    try:
+        Track.objects.get(pk=pk).delete()
+        return view_tracks(request)
+    except:
+        return view_tracks(request)
+
+def delete_user(request, pk):
+    try:
+        CustomUser.objects.get(pk=pk).delete()
+        return view_users(request)
+    except:
+        return view_users(request)

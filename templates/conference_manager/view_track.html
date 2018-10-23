@@ -10,11 +10,11 @@
         </div>
         <div class="col-8">
             <div class="container-fluid" style="margin-top:10%;">
-                    <form action="{% url 'conference_manager:create_track' %}" method="POST">
+                    <form action="{% url 'conference_manager:view_track' pk=track.pk %}" method="POST">
                             {% csrf_token %}
                             {% if success %}
                                 <div class="alert alert-success">
-                                        <strong>Success!</strong> The track was created.
+                                        <strong>Success!</strong> The details were updated.
                                       </div>
                                 {% endif %}
                             <div class="form-group row">
@@ -22,7 +22,11 @@
                                 <div class="col-sm-10">
                                         <select class="form-control" name="author" required>
                                             {% for author in authors %}
+                                                {% if author == track.author %}
+                                                <option value={{author.username}} selected>{{ author.first_name}} {{ author.last_name }}</option>
+                                                {% else %}
                                                 <option value={{author.username}}>{{ author.first_name}} {{ author.last_name }}</option>
+                                                {% endif %}
                                             {% endfor %}
                                         </select>
                                 </div>
@@ -34,7 +38,11 @@
                                     <div class="col-sm-10">
                                             <select class="form-control" name="reviewer" required>
                                                 {% for reviewer in reviewers %}
+                                                    {% if reviewer == track.reviewer %}
+                                                    <option value={{reviewer.username}} selected>{{ reviewer.first_name}} {{ reviewer.last_name }}</option>
+                                                    {% else %}
                                                     <option value={{reviewer.username}}>{{ reviewer.first_name}} {{ reviewer.last_name }}</option>
+                                                    {% endif %}
                                                 {% endfor %}
                                             </select>
                                     </div>
@@ -46,7 +54,11 @@
                                         <div class="col-sm-10">
                                                 <select class="form-control" name="track_chair" required>
                                                     {% for track_chair in track_chairs %}
+                                                        {% if reviewer == track.reviewer %}
+                                                        <option value={{track_chair.username}} selected>{{ track_chair.first_name}} {{ track_chair.last_name }}</option>
+                                                        {% else %}
                                                         <option value={{track_chair.username}}>{{ track_chair.first_name}} {{ track_chair.last_name }}</option>
+                                                        {% endif %}
                                                     {% endfor %}
                                                 </select>
                                         </div>
@@ -56,14 +68,17 @@
                                     <div class="form-group row">
                                             <label for="author" class="col-sm-2 col-form-label">Description</label>
                                             <div class="col-sm-10">
-                                                    <textarea class="form-control" rows="5" name="description"></textarea>
+                                                    <input type="text" class="form-control" rows="5" name="description" value="{{ track.description }}"></textarea>
                                             </div>
                                                 
                                         </div>
-                                    
+                                    <br>
                                     <div class="text-center"> 
-                                    <button type="submit" class="btn btn-secondary">Create Track</button>
+                                        <button type="submit" style="display:inline-block"class="btn btn-secondary text-center">Update Track</button>
+                                        <a href="{% url 'conference_manager:delete_track' pk=track.pk %}" class="btn btn-danger text-center" role="button">Delete Track</a>
                                     </div>
+                                    
+
                     </form>
             </div>
         </div>

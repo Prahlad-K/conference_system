@@ -40,7 +40,9 @@ def add_user(request):
         return render(request, 'conference_manager/add_user.html', response)
     elif request.method == "POST":
         print(request.POST)
-        u = CustomUser.objects.create(username=request.POST['username'], password=request.POST['password'], first_name = request.POST['first_name'], last_name = request.POST['last_name'], email=request.POST['email'])
+        u = CustomUser.objects.create(username=request.POST['username'], first_name = request.POST['first_name'], last_name = request.POST['last_name'], email=request.POST['email'])
+        u.set_password(request.POST['password'])
+        u.save()
         u.roles.add(Role.objects.get(id = request.POST['role']))
         return render(request, 'conference_manager/add_user.html', {})
 

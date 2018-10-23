@@ -1,0 +1,53 @@
+
+
+<!--{% if error_message %}<p> <strong>{{ error_message }}</strong> </p>{% endif %}-->
+
+{% if payment.started %}
+<p>
+<h1>Your payment has been initiated!</h1>
+
+{{payment.credit_card_no}} <br>
+{{payment.amount}}<br>
+{{payment}}<br>
+{{payment.payment_date}}<br>
+
+<form action= "{% url 'registration_manager:wait' payment.id %}" method="post">
+    {% csrf_token %}
+    <input type = "submit" value = "OK">
+</form>
+
+</p>
+
+{% elif payment.ongoing %}
+<h1>Processing....</h1>
+
+<form action= "{% url 'registration_manager:approve' payment.id %}" method="post">
+        {% csrf_token %}
+        <input type = "submit" value = "Wait for approval">
+</form>
+    
+
+{% elif payment.approved %}
+<h1>Your payment has been approved by the registration manager!</h1>
+
+<h2>Please wait while the transaction is completed.</h2>
+
+{{payment.credit_card_no}} <br>
+{{payment.amount}}<br>
+{{payment}}<br>
+{{payment.payment_date}}<br>
+
+<form action= "{% url 'registration_manager:complete' payment.id %}" method="post">
+        {% csrf_token %}
+        <input type = "submit" value = "Finish">
+</form>
+
+{% else %}
+<h1>Your payment is successful! Thank you for joining us to the conference.</h1>
+
+<form action= "{% url 'registration_manager:index' %}" method="post">
+        {% csrf_token %}
+        <input type = "submit" value = "Pay again">
+</form>
+
+{% endif %}

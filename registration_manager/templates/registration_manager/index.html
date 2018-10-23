@@ -1,0 +1,30 @@
+{% load static %}
+
+<h1>
+    Payment Portal
+ </h1>
+ 
+ <!--{% if error_message %}<p> <strong>{{ error_message }}</strong> </p>{% endif %}-->
+ 
+ <p>
+     Please enter your payment details:<br>
+ 
+     <form action = "" method ="post">
+         {%csrf_token%}
+     <label for="credit_card_no">Credit Card Number:</label>
+     <input id = "credit_card_no" name = "credit_card_no" type="text" required>
+     <br>
+     <label for="amount">Amount:</label>
+     <input id = "amount" name = "amount" type="number" value = "200" required>
+     <br>
+     <label for="user_details">User Details: </label>
+     <input id = "user_details" name = "user_details" type="text" required>
+     <br>
+     <label for="payment_date">Payment date:</label>
+     <input id = "payment_date" name = "payment_date" type="date" required>
+     <br>
+     <input type = "submit" value = "OK">
+     </form>
+ 
+ </p>
+ 

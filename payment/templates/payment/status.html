@@ -1,14 +1,33 @@
-<h1>
-    {{payment}}
-</h1>
+
+
+<!--{% if error_message %}<p> <strong>{{ error_message }}</strong> </p>{% endif %}-->
 
 {% if payment.started %}
-<p> The payment {{payment.id}} has been started</p>
+<p>
+<h1>Your payment has been initiated!</h1>
+
+<h2> Please wait until the registration manager approves your payment. </h2>
+
+{{payment.credit_card_no}} <br>
+{{payment.amount}}<br>
+{{payment}}<br>
+{{payment.payment_date}}<br>
+
+<form action= "{% url 'payment:approve' payment.id %}" method="post">
+    {% csrf_token %}
+    <input type = "submit" value = "OK">
+</form>
+
+</p>
+
 {% elif payment.approved %}
-<p> The payment {{payment.id}} has been approved</p>
-{% elif payment.ongoing %}
-<p> The payment {{payment.id}} has been ongoing</p>
-{% else %}
-<p> The payment {{payment.id}} has completed</p>
+<h1>Your payment has been approved by the registration manager!</h1>
+
+<h2>Please wait while the transaction is completed.</h2>
+
+{{payment.credit_card_no}} <br>
+{{payment.amount}}<br>
+{{payment}}<br>
+{{payment.payment_date}}<br>
 
 {% endif %}

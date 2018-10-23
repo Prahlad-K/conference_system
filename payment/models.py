@@ -5,7 +5,7 @@ from django.db import models
 class Payment(models.Model):
     credit_card_no = models.CharField(max_length=20)
     amount = models.IntegerField(default = 200)
-    paymentDetails = models.CharField(max_length=200)
+    user_details = models.CharField(max_length=200)
     payment_date = models.DateTimeField('Date paid')
     started = models.BooleanField(default = False)
     ongoing = models.BooleanField(default = False)
@@ -13,4 +13,4 @@ class Payment(models.Model):
     completed = models.BooleanField(default = False)
 
     def __str__(self):
-     return self.paymentDetails
+     return self.user_details

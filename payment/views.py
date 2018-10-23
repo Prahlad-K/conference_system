@@ -24,14 +24,28 @@ def index(request):
 
     return render(request, 'payment/index.html')
 
-def status(request, payment_id):
+def wait(request, payment_id):
     payment = get_object_or_404(Payment, pk = payment_id)
-
+    payment.ongoing = True
+    payment.started = False
+    payment.save()
     return render(request, 'payment/status.html', {'payment':payment})
 
 def approve(request, payment_id):
     payment = get_object_or_404(Payment, pk = payment_id)
-    payment.started = False
+    payment.ongoing = False
     payment.approved = True
+    payment.save()
+    return render(request, 'payment/status.html', {'payment':payment})
+
+def complete(request, payment_id):
+    payment = get_object_or_404(Payment, pk = payment_id)
+    payment.approved = False
+    payment.completed = True
+    payment.save()
+    return render(request, 'payment/status.html', {'payment':payment})
+
+def status(request, payment_id):
+    payment = get_object_or_404(Payment, pk = payment_id)
 
     return render(request, 'payment/status.html', {'payment':payment})

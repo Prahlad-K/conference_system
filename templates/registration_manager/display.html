@@ -17,9 +17,9 @@ has started. </p>
 {% elif payment.ongoing %}
  is ongoing. <a href = "{% url 'registration_manager:approve' payment.id %}">Approve? </a> </p>
 {% elif payment.approved %}
-is approved. </p>
+ is approved. </p>
 {% elif payment.completed %}
- is completed. </p>
+ is completed. <a href = "{% url 'registration_manager:delete' payment.id %}">Remove? </a></p>
 {% endif %}
 {% endfor %}
 

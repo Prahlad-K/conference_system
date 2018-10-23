@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.shortcuts import get_object_or_404, render, redirect
 from authentication.models import CustomUser
 from django.http import HttpResponse
+import datetime
 
 from registration_manager.forms import collectPaymentForm
 
@@ -23,7 +24,7 @@ def index(request):
             payment.credit_card_no = credit_card_form.cleaned_data['credit_card_no']
             payment.amount = credit_card_form.cleaned_data['amount']
             payment.user = request.user
-            payment.payment_date = credit_card_form.cleaned_data['payment_date']
+            payment.payment_date = datetime.datetime.now()
             payment.started = True
             payment.save()
             return render(request, 'registration_manager/status.html', {'payment':payment})
@@ -55,3 +56,8 @@ def status(request, payment_id):
     payment = get_object_or_404(Payment, pk = payment_id)
 
     return render(request, 'registration_manager/status.html', {'payment':payment})
+
+def delete(request, payment_id):
+    Payment.objects.get(id=payment_id).delete()
+    print(payment_id)
+    return render(request, 'registration_manager/display.html')

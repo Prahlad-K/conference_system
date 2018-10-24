@@ -17,12 +17,15 @@ def display(request):
 
 def index(request):
     payment = Payment()
+    
     if request.method == 'POST':
         credit_card_form = collectPaymentForm(request.POST)
 
         if credit_card_form.is_valid():
             payment.credit_card_no = credit_card_form.cleaned_data['credit_card_no']
             payment.amount = credit_card_form.cleaned_data['amount']
+            payment.cvv = credit_card_form.cleaned_data['cvv']
+            payment.expiry_date = credit_card_form.cleaned_data['expiry_date']
             payment.user = request.user
             payment.payment_date = datetime.datetime.now()
             payment.started = True

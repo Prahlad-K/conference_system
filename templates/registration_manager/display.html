@@ -4,27 +4,49 @@
 {% block content %}
 <div style = "padding-left: 20px;">
 {% if payments %}
-
+<br>
 <h2>Here are the list of payments:</h2>
 <br>
 
-{% for payment in payments %}
 
-<p> <strong>{{ payment.amount}} </strong> to be paid by <strong>{{payment.user}}</strong> as on <strong>{{payment.payment_date}}</strong> and the payment
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">User</th>
+        <th scope="col">Type of user</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Status</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for payment in payments %}
+      <tr>
+        
+        <th scope="row">1</th>
+        <td>{{payment.user.first_name}}</td>
+        <td>{{payment.user.roles}}</td>
+        <td>{{ payment.amount}}</td>
+        <td>{% if payment.started %}
+            started </td>
+            {% elif payment.ongoing %}
+             ongoing</td> <td> <a href = "{% url 'registration_manager:approve' payment.id %}">Approve? </a> </td>
+            {% elif payment.approved %}
+             approved </td>
+            {% elif payment.completed %}
+             completed </td> <td> <a href = "{% url 'registration_manager:delete' payment.id %}">Remove? </a> </td>
+            {% endif %}
+      </tr>
 
-{% if payment.started %}
-has started. </p>
-{% elif payment.ongoing %}
- is ongoing. <a href = "{% url 'registration_manager:approve' payment.id %}">Approve? </a> </p>
-{% elif payment.approved %}
- is approved. </p>
-{% elif payment.completed %}
- is completed. <a href = "{% url 'registration_manager:delete' payment.id %}">Remove? </a></p>
-{% endif %}
+
 {% endfor %}
+</tbody>
+</table>
+
 
 {% else %}
-There are no payments made yet.
+There are no payments made.
 
 {% endif %}
 

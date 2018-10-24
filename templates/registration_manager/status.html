@@ -22,11 +22,7 @@
 </p>
 
 {% elif payment.ongoing %}
-<h1>Processing....</h1>
-<form action= "{% url 'registration_manager:index' %}" method="post">
-        {% csrf_token %}
-        <input type = "submit" value = "Wait for approval">
-</form>
+<h1>Your payment is being processed. Please wait for approval.</h1>
     
 
 {% elif payment.approved %}
@@ -34,9 +30,11 @@
 <br>
 <h2>Please wait while the transaction is completed.</h2>
 <br>
+<!--
 {{payment.credit_card_no}} <br>
 {{payment.amount}}<br>
 {{payment.payment_date}}<br>
+-->
 
 <form action= "{% url 'registration_manager:complete' payment.id %}" method="post">
         {% csrf_token %}
@@ -44,13 +42,13 @@
 </form>
 
 {% else %}
-<h1>The payment was successful! Thank you for joining us to the conference.</h1>
-
+<h1>Your payment was successful! Thank you for joining us to the conference.</h1>
+<!--
 <form action= "{% url 'registration_manager:index' %}" method="post">
         {% csrf_token %}
         <input type = "submit" value = "Pay again">
 </form>
-
+-->
 {% endif %}
 </div>
 {% endblock %}

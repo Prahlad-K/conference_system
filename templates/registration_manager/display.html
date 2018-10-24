@@ -14,6 +14,7 @@
       <tr>
         <th scope="col">#</th>
         <th scope="col">User</th>
+        <th scope="col">Username</th>
         <th scope="col">Type of user</th>
         <th scope="col">Amount</th>
         <th scope="col">Status</th>
@@ -26,7 +27,17 @@
         
         <th scope="row">1</th>
         <td>{{payment.user.first_name}}</td>
-        <td>{{payment.user.roles}}</td>
+        <td>{{payment.user.username}}</td>
+        <td> {% for role in roles %}
+            {% if role.id == 1 %} Author; 
+            {% elif role.id == 2 %} Reviewer; 
+            {% elif role.id == 3 %} Track Chair; 
+            {% elif role.id == 4 %} Conference Chair; 
+            {% elif role.id == 5 %} Registration Manager; 
+            {% elif role.id == 6 %} Conference Manager; 
+            {% endif %}
+        {% endfor %}
+        </td>
         <td>{{ payment.amount}}</td>
         <td>{% if payment.started %}
             started </td>

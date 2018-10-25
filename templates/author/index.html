@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Home</title>
+  </head>
+  <body>
+    <form action="/postad/" method="post">{% csrf_token %}
+        <!-- *name -->
+        {{  form.non_field_errors }}
+        <div class="fieldWrapper">
+            {{ form.name.errors }}
+            <label for="id_name">Name</label>
+            {{ form.name }}
+        </div>
+        <!-- *email -->
+        <div class="fieldWrapper">
+            {{ form.email.errors }}
+            <label for="id_email">Email</label>
+            {{ form.email }}
+        </div>
+        <!-- gist -->
+        <div class="fieldWrapper">
+            {{ form.gist.errors }}
+            <label for="id_gist">Gist</label>
+            {{ form.gist }}
+        </div>
+        <!-- category -->
+        <div class="fieldWrapper">
+            {{ form.category.errors }}
+            <label for="id_category">Category</label>
+            {{ form.category }}
+        </div>
+        <!-- location -->
+        <div class="fieldWrapper">
+            {{ form.location.errors }}
+            <label for="id_name">Location</label>
+            {{ form.location }}
+        </div>
+        <!-- description -->
+        <div class="fieldWrapper">
+            {{ form.description.errors }}
+            <label for="id_description">Description</label>
+            {{ form.description }}
+        </div>
+        <!-- expire -->
+        <div class="fieldWrapper">
+            {{ form.expire.errors }}
+            <label for="id_expire">Expire</label>
+            {{ form.expire }}
+        </div>
+        <button type="submit">
+            <i class="fa fa-thumb-tack"></i> Post
+        </button>
+    </form>
+  </body>
+</html>

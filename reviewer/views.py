@@ -5,5 +5,17 @@ from authentication.models import CustomUser
 from django.http import HttpResponse
 # Create your views here.
 
+from .models import ReviewReport  
+from .forms import ReviewForm
+from conference_manager.models import Track
+
+
 def index(request):
-    return HttpResponse("<p>Reviewer</p>")
+    tracks = Track.objects.filter(reviewer=request.user)
+    reports = ReviewReport.objects.all()
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return render(request, 'reviewer/index.html', {'form':ReviewForm, 'tracks':tracks, 'reports':reports})
+    return render(request, 'reviewer/index.html', {'form':ReviewForm, 'tracks':tracks, 'reports':reports})

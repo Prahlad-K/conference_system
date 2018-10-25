@@ -4,18 +4,18 @@ from django.shortcuts import get_object_or_404, render, redirect
 from authentication.models import CustomUser
 from django.http import HttpResponse
 from django.views.generic import FormView
-# Create your views here.
+from .models import ResearchPaper 
+from .forms import AdPaperForm
+from conference_manager.models import Track
+from payment_app.models import Payment
+
+#Create your views here.
 
 def index(request):
-    return HttpResponse("<p>Author</p>")
-
-from .models import PostAd  
-from .forms import PostAdForm
-
-class PostAdPage(FormView):  
-    template_name = 'author/index.html'
-    success_url = '/awesome/'
-    form_class = PostAdForm
-
-    def form_valid(self, form):
-        return HttpResponse("Sweeeeeet.")
+    if request.method == 'POST':
+        form = AdPaperForm(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            return render(request,'author/index.html',{'form':AdPaperForm})
+    else:
+        return render(request,'author/index.html',{'form':AdPaperForm})        

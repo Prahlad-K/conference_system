@@ -1,0 +1,49 @@
+{% extends 'payment_app/template.html' %}
+
+{% load static %}
+{% block content %}
+
+
+<!--{% if error_message %}<p> <strong>{{ error_message }}</strong> </p>{% endif %}-->
+
+{% if payment.started %}
+<p>
+<h1>Your payment has been initiated!</h1>
+
+{{payment.credit_card_no}} <br>
+{{payment.amount}}<br>
+{{payment.payment_date}}<br>
+
+<form action= "{% url 'payment_app:wait' payment.id %}" method="post">
+    {% csrf_token %}
+    <input type = "submit" value = "OK">
+</form>
+
+</p>
+
+{% elif payment.ongoing %}
+<h1>Your payment is being processed. Please wait for approval.</h1>
+    
+
+{% elif payment.approved %}
+<h1>The following payment has been approved by the registration manager!</h1>
+<br>
+<h2>Please wait while the transaction is completed.</h2>
+<br>
+<!--
+{{payment.credit_card_no}} <br>
+{{payment.amount}}<br>
+{{payment.payment_date}}<br>
+-->
+
+<form action= "{% url 'payment_app:complete' payment.id %}" method="post">
+        {% csrf_token %}
+        <input type = "submit" value = "Finish">
+</form>
+
+{% else %}
+<h1>Your payment was successful! Thank you for joining us to the conference.</h1>
+
+{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'registration_manager/template.html' %}
+
+{% load static %}
+{% block content %}
+<div style = "padding-left: 20px;">
+{% if payments %}
+<br>
+<h2>Here are the list of payments:</h2>
+<br>
+
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">User</th>
+        <th scope="col">Username</th>
+        <th scope="col">Type of user</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Status</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for payment in payments %}
+      <tr>
+        
+        <th scope="row">1</th>
+        <td>{{payment.user.first_name}}</td>
+        <td>{{payment.user.username}}</td>
+        <td> {% for role in roles %}
+            {% if role.id == 1 %} Author; 
+            {% elif role.id == 2 %} Reviewer; 
+            {% elif role.id == 3 %} Track Chair; 
+            {% elif role.id == 4 %} Conference Chair; 
+            {% elif role.id == 5 %} Registration Manager; 
+            {% elif role.id == 6 %} Conference Manager; 
+            {% endif %}
+        {% endfor %}
+        </td>
+        <td>{{ payment.amount}}</td>
+        <td>{% if payment.started %}
+            started </td>
+            {% elif payment.ongoing %}
+             ongoing</td> <td> <a href = "{% url 'registration_manager:approve' payment.id %}">Approve? </a> </td>
+            {% elif payment.approved %}
+             approved </td>
+            {% elif payment.completed %}
+             completed </td> <td> <a href = "{% url 'registration_manager:delete' payment.id %}">Remove? </a> </td>
+            {% endif %}
+      </tr>
+
+
+{% endfor %}
+</tbody>
+</table>
+
+
+{% else %}
+There are no payments made.
+
+{% endif %}
+
+</div>
+{% endblock %}

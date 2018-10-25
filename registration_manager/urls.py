@@ -4,5 +4,8 @@ from . import views
 app_name = 'registration_manager'
 
 urlpatterns = [
-    path('', views.index, name='index')
+
+    path('', views.display, name='display'),
+    path('<int:payment_id>/approve', views.approve, name='approve'),
+    path('<int:payment_id>/delete', views.delete, name = 'delete'),
 ]

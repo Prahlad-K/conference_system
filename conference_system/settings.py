@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'conference_chair',
     'conference_manager',
     'registration_manager',
+    'payment_app'
 
 ]
 

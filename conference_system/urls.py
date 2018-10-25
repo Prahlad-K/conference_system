@@ -25,4 +25,5 @@ urlpatterns = [
     path('conference_chair/', include('conference_chair.urls', namespace="conference_chair")),
     path('registration_manager/', include('registration_manager.urls', namespace="registration_manager")),
     path('conference_manager/', include('conference_manager.urls', namespace="conference_manager")),
+    path('payment_app/', include('payment_app.urls', namespace="payment_app")),
 ]

@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
-import datetime
+from django.utils import timezone
 
 class collectPaymentForm(forms.Form):
     credit_card_no = forms.CharField(help_text = "Enter your credit card no.",max_length=20)
@@ -12,7 +12,7 @@ class collectPaymentForm(forms.Form):
     def clean_expiry_date(self):
         data = self.cleaned_data['expiry_date']
 
-        if data < datetime.date.today():
+        if data < timezone.now().date():
             raise ValidationError(_('Card expired!'))
 
         return data

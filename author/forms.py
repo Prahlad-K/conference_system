@@ -1,31 +1,26 @@
 from django import forms 
-from .models import PostAd
+from .models import ResearchPaper
 
-CATEGORIES = (  
-    ('LAB', 'labor'),
-    ('CAR', 'cars'),
-    ('TRU', 'trucks'),
-    ('WRI', 'writing'),
-)
-LOCATIONS = (  
-    ('BRO', 'Bronx'),
-    ('BRK', 'Brooklyn'),
-    ('QNS', 'Queens'),
-    ('MAN', 'Manhattan'),
+ABSTRACT = 1
+FULL_PROPOSAL = 2 
+BOTH = 3
+SUBMISSION_CHOICES = (
+    (ABSTRACT,'Abstract'),
+    (FULL_PROPOSAL,'Full Proposal'),
+    (BOTH,'Both'),
 )
 
-class PostAdForm(forms.ModelForm):  
+class AdPaperForm(forms.ModelForm):  
     error_css_class = 'error'
+    title = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Research Paper Title'}))
+    authors = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Authors for this Paper'}))
 
-    category = forms.ChoiceField(choices=CATEGORIES, required=True )
-    location = forms.ChoiceField(choices=LOCATIONS, required=True )
-
+    type = forms.ChoiceField(choices=SUBMISSION_CHOICES, required=True,widget=forms.Select(attrs={'class':'form-control'}))
+    docfile = forms.FileField(
+                label='Select a file',
+                help_text='max. 42 megabytes'
+              )
     class Meta:
-        model = PostAd
+        model = ResearchPaper
         fields = '__all__'
-        widgets = {
-            'name': forms.TextInput(attrs={'placeholder': 'What\'s your name?'}),
-            'email': forms.TextInput(attrs={'placeholder': 'john@example.com'}),
-            'gist': forms.TextInput(attrs={'placeholder': 'In a few words, I\'m looking for/to...'}),
-            'expire': forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY'})
-        }
+        

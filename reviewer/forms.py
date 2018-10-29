@@ -3,19 +3,27 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 
-class createReportForm(forms.Form):
-    credit_card_no = forms.CharField(help_text = "Enter your credit card no.",max_length=20)
-    amount = forms.IntegerField()
-    cvv = forms.IntegerField()
-    expiry_date = forms.DateField()
+from .models import ReviewReport
 
-    def clean_expiry_date(self):
-        data = self.cleaned_data['expiry_date']
+PERF_CHOICES = (
+('VERYGOOD', 'Very good'),
+('GOOD', 'Good'),
+('AVERAGE', 'Average'),
+('BELOWAVG', 'Below Average'),
+('BAD', 'Bad'),
+)
 
-        if data < timezone.now().date():
-            raise ValidationError(_('Card expired!'))
 
-        return data
+class ReviewForm(forms.ModelForm):  
+    error_css_class = 'error'
 
+    problem_statement = forms.ChoiceField(choices=PERF_CHOICES, required=True )
+    research_sig = forms.ChoiceField(choices=PERF_CHOICES, required=True )
+    lit_review = forms.ChoiceField(choices=PERF_CHOICES, required=True )
+    methodology = forms.ChoiceField(choices=PERF_CHOICES, required=True )
+    description = forms.CharField(max_length=200)
+    class Meta:
+        model = ReviewReport
+        fields = '__all__'
         
     

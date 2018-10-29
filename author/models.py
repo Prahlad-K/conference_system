@@ -13,7 +13,7 @@ SUBMISSION_CHOICES = (
 )
  
 class ResearchPaper(models.Model):
-    title = models.CharField(max_length=200)
-    authors = models.CharField(max_length=100)
+    title = models.CharField(max_length=200,null=True)
+    authors = models.CharField(max_length=100,null=True)
     type = models.IntegerField(choices=SUBMISSION_CHOICES)
-    docfile = models.FileField(upload_to='research_papers')
+    docfile = models.FileField(upload_to='research_papers',null=True)

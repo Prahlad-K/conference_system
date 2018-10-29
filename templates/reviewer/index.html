@@ -1,0 +1,185 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Reviewer</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'reviewer/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'reviewer/tabs.css' %}" rel="stylesheet">
+    <link href="{% static 'reviewer/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <h2 style="color:aliceblue;">Reviewer</h2>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'reviewer:index' %}">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'authentication:index' %}">Back</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <section id="tabs">
+        <div class="container">
+            <br>
+            <div class="row">
+                <div class="col-xs-12 ">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true"><i class="fa-"></i>Papers Assigned</a>
+                            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Reports generated</a>
+                            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Reports Approved</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content py-3 px-3" id="nav-tabContent">
+                        {% for track in tracks %}
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                          <div class="p_item">
+                            <h6>{{track.track_chair}}</h6>
+                            <div class="row">
+                              <div class="col-lg-8">
+                                  by {{track.author}}
+                              </div>
+                              <div class="col-lg-4">
+                                 <small>3 days ago</small> 
+                              </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="row">
+                                      <div class="col-lg-2">  
+                                      <i class="fa fa-folder-open"></i>
+                                      </div>
+                                      <div class="col-lg-8"><a style="color:black;"href="#">Read Paper</a></div>
+                                    </div>
+                                </div>    
+                                <div class="col-lg-8">
+                                    <div class="row">
+                                        <div class="col-lg-1">  
+                                        <i class="fa fa-th-list"></i>
+                                        </div>
+                                        <div class="col-lg-8"><a style="color:black;" data-toggle="modal" data-target="#reviewCreate" href = "#">Open Review Form</a></div>
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                         
+                        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                            {% for report in reports %}
+                            <div class="p_item">
+                                    <h6>{{report.description}}</h6>
+                                    <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="row">
+                                                  <div class="col-lg-2">  
+                                                  <i class="fa fa-folder-open"></i>
+                                                  </div>
+                                                  <div class="col-lg-8"><a style="color:black;" data-toggle="modal" data-target="#reviewCreate" href="#">Edit report</a></div>
+                                                </div>
+                                            </div>    
+                                    </div>
+                            </div>
+                            {% endfor %}
+                        </div>                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        </section>
+    <div class="modal" id="reviewCreate">
+            <div class="modal-dialog">
+              <div class="modal-content">
+              
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h4 class="modal-title">Review Form</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                
+                <!-- Modal body -->
+                <div class="modal-body">
+                        <form action="" method="POST">
+                                {% csrf_token %}
+                                <div class="form-row">
+                                    <label class="col-md-6 col-form-label">Problem Statement</label>
+                                    <div class="col-md-6">
+                                           {{form.problem_statement}}
+                                    </div> 
+                                </div>
+    
+                                <br>
+    
+                                <div class="form-row">
+                                    <label class="col-md-6 col-form-label">Research Significance</label>
+                                    <div class="col-md-6">
+                                           {{form.research_sig}}
+                                    </div> 
+                                </div>
+    
+                                <br>
+    
+                                <div class="form-row">
+                                    <label class="col-md-6 col-form-label">Literature review</label>
+                                    <div class="col-md-6">
+                                            {{form.lit_review}}
+                                    </div> 
+                                </div>
+                            
+                                <br>     
+    
+                                <div class="form-row">
+                                        <label class="col-md-6 col-form-label">Methodology</label>
+                                        <div class="col-md-6">
+                                                {{form.methodology}}
+                                        </div> 
+                                </div>
+                                <br>
+                                <div class="form-row">
+                                        <label class="col-md-6 col-form-label">Description</label>
+                                        <div class="col-md-6">
+                                                {{form.description}}
+                                        </div> 
+                                </div>
+                                <br>
+                                
+                                <div class="text-center"> 
+                                    <button type="submit" class="btn btn-secondary" href = "{% url 'reviewer:index' %}">Submit</button>
+                                </div>
+                        </form>
+                </div>
+                
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>    
+            </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'reviewer/bootstrap/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'reviewer/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  </body>
+
+</html>

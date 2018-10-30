@@ -36,25 +36,75 @@
     </style>
   </head>
   <body>
-      <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-            <div class="container">
-              <h2 style="color:aliceblue;">Author</h2>
-              <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                  <li class="nav-item active">
-                    <a class="nav-link" href="#">Home
-                      <span class="sr-only">(current)</span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'authentication:index' %}">Back
-                    </a>
-                  </li>
-                </ul>
-              </div>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="mainNav">
+          <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="{% url 'authentication:index' %}">Conference Management System</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                  <a class="nav-link js-scroll-trigger" href="{% url 'authentication:index' %}">Home<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link js-scroll-trigger" href="{% url 'payment_app:index' %}">Pay Fee</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link js-scroll-trigger" href="{% url 'authentication:logout_view' %}">Log out</a>
+                </li>
+              </ul>
             </div>
-    </nav>
+          </div>
+        </nav>
+      <header class="page-heading">
+             <div style="padding-top: 70px;padding-left: 10px;padding-right: 10px;background-color: black;"class="card">
+                      <div class="card-body">
+                      <div style="padding: 20px"class="card-title text-center text-white">
+                              <div class="col-lg-12">
+                                  <h4 style="color: white;"class="page-header">Submissions Overview</h4>
+                                  <hr style="background-color:white;height: 1px;" width=150px>
+                              </div>
+                              <br>
+                            <div class="col-lg-12">
+                                  
+                               <i class="fa fa-bar-chart-o fa-3x"></i>
+                               <h5 style="font-size: 40px">{{total_tracks}}</h5>
+                               <h5>Total Submissions</h5> 
+                            </div>
+                              <!-- /.col-lg-12 -->
+                      </div>
+                      <div class="card-text">
+                      <div class="row text-center">
+                              <div class="col-sm-4">
+                                <div class="card">
+                                  <div class="card-body">
+                                    <h5 class="card-title" style="font-size: 40px">{{no_submitted_tracks}}</h5>
+                                    <p class="card-text">Under Review</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="card">
+                                  <div class="card-body">
+                                    <h5 class="card-title"style="font-size: 40px" >{{no_reviewed_tracks}}</h5>
+                                    <p class="card-text">Reviewed</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                      <div class="card">
+                                        <div class="card-body">
+                                          <h5 class="card-title" style="font-size: 40px">{{no_approved_tracks}}</h5>
+                                          <p class="card-text">Approved</p>
+                                        </div>
+                                      </div>
+                              </div>
+                      </div>
+                      </div>
+                      </div>
+              </div>    
+      </header>
     <div class="container">
         {% if messages %}
         <ul class="messages">
@@ -66,7 +116,7 @@
             {% endfor %}
         </ul>
         {% endif %}
-
+<br>
             <button type="button" class="btn btn-block" data-toggle="modal" data-target="#exampleModalCenter">
                    <b>Submit Research Paper</b>
             </button>    

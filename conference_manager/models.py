@@ -2,6 +2,7 @@ from django.db import models
 from authentication.models import CustomUser
 
 from author.models import ResearchPaper
+from reviewer.models import ReviewReport
 # Create your models here.
 class Track(models.Model):
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='author')
@@ -9,5 +10,7 @@ class Track(models.Model):
     track_chair = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='track_chair')
     description = models.TextField(blank = True, null = True)
     paper = models.ForeignKey(ResearchPaper,on_delete=models.CASCADE,related_name='respaper',null=True)
+    report = models.ForeignKey(ReviewReport,on_delete=models.CASCADE,related_name='respaper',null=True)
+    paper_submitted = models.BooleanField(default = False)
     report_submitted = models.BooleanField(default = False)
     report_approved = models.BooleanField(default = False)

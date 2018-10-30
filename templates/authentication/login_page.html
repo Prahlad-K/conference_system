@@ -2,6 +2,11 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <style>
+        .mysignup a:hover{
+            text-decoration: none;
+        }
+    </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -23,6 +28,11 @@
     <p style="font-family: 'Open Sans',Verdana,sans-serif;"class="lead-mktg text-gray text-center col-md-8 mx-auto mb-4">
     We believe researchers deserve exceptional conference software, so we’ve poured our energy into building it.
     </p>  
+    <div class="text-center mysignup">
+            <a style="border:1px solid rgb(0, 162, 255); padding:10px" class="btn-mktg btn-large-mktg btn-outline-mktg Bump-link" data-ga-click="Signup, Attempt, location:teams;" href="{% url 'authentication:sign_up' %}">
+                Sign up <span class="Bump-link-symbol">&rarr;</span></a>   
+     </div>
+     <br>
     <div class="row">
         <div class="col-lg-6">
                 <div class="img-wrapper">
@@ -52,13 +62,8 @@
                           <input type="password" id="inputPassword" class="form-control" placeholder="Password" name = "password" required>
                           <label for="inputPassword">Password</label>
                         </div>
-                        <div class="row">
-                         <div class="col-lg-6">       
-                        <button style="background-color:darkgrey;color: white"class="btn btn-lg btn-block" type="submit">Sign up</button> 
-                         </div>
-                         <div class="col-lg-6">       
-                                <button style="background-color:darkgrey;color: white"class="btn btn-lg btn-block" type="submit">Log in</button> 
-                         </div>
+     
+                            <button style="background-color:darkgrey;color: white"class="btn btn-lg btn-block" type="submit">Log in</button> 
                     </form>  
         </div>
     </div>

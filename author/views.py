@@ -11,10 +11,23 @@ from payment_app.models import Payment
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 
+import random
+
 #Create your views here.
+from .models import ResearchPaper
 
 def index(request):
     tracks = Track.objects.filter(author=request.user)
+    total_tracks = len(tracks)
+
+    submitted_tracks = Track.objects.filter(author = request.user, paper_submitted= True)
+    no_submitted_tracks = len(submitted_tracks)
+
+    reviewed_tracks = Track.objects.filter(author = request.user, report_submitted= True)
+    no_reviewed_tracks = len(reviewed_tracks)
+
+    approved_tracks = Track.objects.filter(author = request.user, report_approved= True)
+    no_approved_tracks = len(approved_tracks)
 
     if request.method == 'POST':
         form = AdPaperForm(request.POST,request.FILES)
@@ -23,20 +36,21 @@ def index(request):
             m = form.instance
             track = Track()
             track.author = request.user
-            revs = CustomUser.objects.filter(roles = Role.objects.get(id=2))
-            for rev in revs:
-                if not rev.is_superuser:
-                    track.reviewer=rev
-                    break
-            trcs = CustomUser.objects.filter(roles = Role.objects.get(id=3))
-            for trc in trcs:
-                if not trc.is_superuser:
-                    track.track_chair=trc
-                    break
+            revs = CustomUser.objects.filter(roles = Role.objects.get(id=2), is_superuser = False)
+           #selects random reviewer
+            index = random.randint(0,len(revs)-1)
+            track.reviewer = revs[index]
 
+            trcs = CustomUser.objects.filter(roles = Role.objects.get(id=3), is_superuser = False)
+           #selects random track chair 
+            index = random.randint(0,len(trcs)-1)
+            
+            track.track_chair = trcs[index]
+            
             track.paper = m
+            track.paper_submitted = True
             track.save()
             messages.info(request, 'Your response has been recorded successfully!')
-        return render(request,'author/index.html',{'form':AdPaperForm,'tracks':tracks})
+        return render(request,'author/index.html',{'form':AdPaperForm,'tracks':tracks, 'no_submitted_tracks':no_submitted_tracks, 'no_reviewed_tracks':no_reviewed_tracks, 'no_approved_tracks':no_approved_tracks, 'total_tracks':total_tracks})
     
-    return render(request,'author/index.html',{'form':AdPaperForm,'tracks':tracks})
+    return render(request,'author/index.html',{'form':AdPaperForm,'tracks':tracks, 'no_submitted_tracks':no_submitted_tracks, 'no_reviewed_tracks':no_reviewed_tracks, 'no_approved_tracks':no_approved_tracks, 'total_tracks':total_tracks})

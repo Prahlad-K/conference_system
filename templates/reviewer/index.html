@@ -79,7 +79,7 @@
                                         <div class="col-lg-1">  
                                         <i class="fa fa-th-list"></i>
                                         </div>
-                                        <div class="col-lg-8"><a style="color:black;" data-toggle="modal" data-target="#reviewCreate" href = "#">Open Review Form</a></div>
+                                        <div class="col-lg-8"><a style="color:black;" href = "{% url 'reviewer:submit' track.id %}">Open Review Form</a></div>
                                      </div>
                                
                            
@@ -128,7 +128,7 @@
                                                   <div class="col-lg-2">  
                                                   <i class="fa fa-folder-open"></i>
                                                   </div>
-                                                  <div class="col-lg-8"><a style="color:black;" data-toggle="modal" data-target="#reviewCreate" href="#">Edit report</a></div>
+                                                  <div class="col-lg-8"><a style="color:black;" href="{% url 'reviewer:index' %}">Edit report</a></div>
                                                 </div>
                                             </div>    
                                     </div>
@@ -140,74 +140,7 @@
             </div>
         </div>
         </section>
-    <div class="modal" id="reviewCreate">
-            <div class="modal-dialog">
-              <div class="modal-content">
-              
-                <!-- Modal Header -->
-                <div class="modal-header">
-                  <h4 class="modal-title">Review Form</h4>
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                
-                <!-- Modal body -->
-                <div class="modal-body">
-                        <form action="" method="POST">
-                                {% csrf_token %}
-                                <div class="form-row">
-                                    <label class="col-md-6 col-form-label">Problem Statement</label>
-                                    <div class="col-md-6">
-                                           {{form.problem_statement}}
-                                    </div> 
-                                </div>
-    
-                                <br>
-    
-                                <div class="form-row">
-                                    <label class="col-md-6 col-form-label">Research Significance</label>
-                                    <div class="col-md-6">
-                                           {{form.research_sig}}
-                                    </div> 
-                                </div>
-    
-                                <br>
-    
-                                <div class="form-row">
-                                    <label class="col-md-6 col-form-label">Literature review</label>
-                                    <div class="col-md-6">
-                                            {{form.lit_review}}
-                                    </div> 
-                                </div>
-                            
-                                <br>     
-    
-                                <div class="form-row">
-                                        <label class="col-md-6 col-form-label">Methodology</label>
-                                        <div class="col-md-6">
-                                                {{form.methodology}}
-                                        </div> 
-                                </div>
-                                <br>
-                                <div class="form-row">
-                                        <label class="col-md-6 col-form-label">Description</label>
-                                        <div class="col-md-6">
-                                                {{form.description}}
-                                        </div> 
-                                </div>
-                                <br>
-                                
-                                <div class="text-center"> 
-                                    <button type="submit" class="btn btn-secondary" href = "{% url 'reviewer:index' %}">Submit</button>
-                                </div>
-                        </form>
-                </div>
-                
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                </div>    
-            </div>
-    </div>
+   
 
     <!-- Bootstrap core JavaScript -->
     <script src="{% static 'reviewer/bootstrap/jquery/jquery.min.js' %}"></script>

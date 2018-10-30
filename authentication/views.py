@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate,login,logout
 from django.shortcuts import get_object_or_404, render, redirect
-from authentication.models import CustomUser
-
+from conference_manager.models import Track
+from .models import *
 # Create your views here.
 
 def index(request):
@@ -42,3 +42,22 @@ def sign_in(request):
 def logout_view(request):
     logout(request)
     return sign_in(request)  
+
+def sign_up(request):
+    if request.method == "GET":
+        roles = Role.objects.all()
+        response = {}
+        response['roles'] = roles
+        return render(request, 'authentication/sign_up.html', response)
+    elif request.method == "POST":
+        print(request.POST)
+        u = CustomUser.objects.create(username=request.POST['username'], first_name = request.POST['first_name'], last_name = request.POST['last_name'], email=request.POST['email'])
+        u.set_password(request.POST['password'])
+        u.save()
+        u.roles.add(Role.objects.get(id = request.POST['role']))
+        roles = Role.objects.all()
+        response = {
+            'success': True,
+            'roles': roles
+        }
+        return render(request, 'authentication/sign_up.html', response)

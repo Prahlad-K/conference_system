@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>CMS Home Page</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'reviewer/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/authentication/landing-page.css' %}" rel="stylesheet">
+    <link href="{% static 'reviewer/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-light bg-light static-top">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'authentication:index' %}">Conference Management System</a>
+        <a class="btn btn-primary" href="{% url 'authentication:logout_view' %}">Log out</a>
+      </div>
+    </nav>
+
+    <!-- Masthead -->
+    <header class="masthead text-white text-center">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-9 mx-auto">
+            <h1 class="mb-5">NIT Warangal Conference 2019</h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-9 mx-auto">
+            <h4 style="font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,Courier,monospace;"class="mb-2">30/11/2019, Warangal</h4>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Icons Grid -->
+    
+
+    <section class="features-icons bg-light text-center">
+      <div class="container">
+            <h2 style="font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,Courier,monospace;"class="text-center">Your Roles</h2>
+            <hr style="background:blue;height: 2px;"width="150px">
+        <div class="row">
+        {% for role in roles %}
+        {% if role.id == 1 %} 
+          <div class="col-lg-4">
+            <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+              <div class="features-icons-icon d-flex">
+                <i class="fa fa-pencil m-auto text-primary"></i>
+              </div>
+              <h3><a href = "{% url 'author:index'%}" >Author</a></h3>
+            </div>
+          </div>
+          {% elif role.id == 2 %} 
+          <div class="col-lg-4">
+            <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+              <div class="features-icons-icon d-flex">
+                <i class="fa fa-list-alt m-auto text-primary"></i>
+              </div>
+              <h3><a href = "{% url 'reviewer:index'%}" >Reviewer</a></h3>
+            </div>
+          </div>
+          {% elif role.id == 3 %} 
+          <div class="col-lg-4">
+            <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+              <div class="features-icons-icon d-flex">
+                <i class="fa fa-folder m-auto text-primary"></i>
+              </div>
+              <h3><a href = "{% url 'track_chair:index'%}" >Track Chair</a></h3>
+            </div>
+          </div>
+          {% elif role.id == 4 %} 
+          <div class="col-lg-4">
+            <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+              <div class="features-icons-icon d-flex">
+                <i class="fa fa-user m-auto text-primary"></i>
+              </div>
+              <h3><a href = "{% url 'conference_chair:index'%}" >Conference Chair</a></h3>
+            </div>
+          </div>
+          {% elif role.id == 5 %} 
+          <div class="col-lg-4">
+            <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+              <div class="features-icons-icon d-flex">
+                <i class="fa fa-university m-auto text-primary"></i>
+              </div>
+              <h3><a href = "{% url 'conference_manager:index'%}" >Conference Manager</a></h3>
+            </div>
+          </div>
+          {% else %} 
+          <div class="col-lg-4">
+            <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+              <div class="features-icons-icon d-flex">
+                <i class="fa fa-money m-auto text-primary"></i>
+              </div>
+              <h3><a href = "{% url 'registration_manager:display'%}" >Registration Manager</a></h3>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+   
+    <!-- Footer -->
+    <footer class="footer">
+            <div class="container">
+              <div class="text-center">
+                  <p class="text-muted small">&copy; Your Website 2018. All Rights Reserved.</p>
+              </div>
+            </div>
+          </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'author/bootstrap/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'author/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  </body>
+
+</html>

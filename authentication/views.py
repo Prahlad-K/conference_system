@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate,login,logout
 from django.shortcuts import get_object_or_404, render, redirect
 from authentication.models import CustomUser
+
 # Create your views here.
 
 def index(request):
@@ -12,14 +13,14 @@ def index(request):
     else:
         print("Needs authentication")
         response = {}
-        return render(request, 'authentication/login.html', {})
+        return render(request, 'authentication/login_page.html', {})
 
 def choose_profile(request, user):
     response = {}
     roles = request.user.roles.all()
     response['roles'] = roles
     print(roles)
-    return render(request, 'authentication/choose_profile.html', response)
+    return render(request, 'authentication/main_page.html', response)
 
 def sign_in(request): 
     print("Sign in request")
@@ -30,10 +31,14 @@ def sign_in(request):
 
         user = authenticate(username=username,password=password)
         if user is None:
-            return render(request,'authentication/login.html',{'error':'Invalid username or password'})
+            return render(request,'authentication/login_page.html',{'error':'Invalid username or password'})
         else:
             login(request, user)
             print("Log in successful")
             return choose_profile(request, user)
     else:
         return index(request)
+
+def logout_view(request):
+    logout(request)
+    return sign_in(request)  

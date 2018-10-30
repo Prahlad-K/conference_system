@@ -5,5 +5,10 @@ from authentication.models import CustomUser
 from django.http import HttpResponse
 # Create your views here.
 
+from conference_manager.models import Track
+
+
 def index(request):
-    return HttpResponse("<p>Conference Chair</p>")
+    tracks = Track.objects.all()
+
+    return render(request, 'conference_chair/index.html', {'tracks':tracks})

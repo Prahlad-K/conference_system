@@ -22,6 +22,7 @@ class ReviewForm(forms.ModelForm):
     lit_review = forms.ChoiceField(choices=PERF_CHOICES, required=True )
     methodology = forms.ChoiceField(choices=PERF_CHOICES, required=True )
     description = forms.CharField(max_length=200)
+    
     class Meta:
         model = ReviewReport
         fields = '__all__'

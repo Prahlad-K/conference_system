@@ -13,9 +13,19 @@ from conference_manager.models import Track
 def index(request):
     tracks = Track.objects.filter(reviewer=request.user)
     reports = ReviewReport.objects.all()
+    
+    return render(request, 'reviewer/index.html', {'tracks':tracks, 'reports':reports})
+
+
+def submit(request, track_id):
+    track = Track.objects.get(pk = track_id)
     if request.method == 'POST':
         form = ReviewForm(request.POST, request.FILES)
-        if form.is_valid():
+        if form.is_valid():        
+            track.report = form.instance 
+            track.paper_submitted = False   
+            track.report_submitted = True
             form.save()
-            return render(request, 'reviewer/index.html', {'form':ReviewForm, 'tracks':tracks, 'reports':reports})
-    return render(request, 'reviewer/index.html', {'form':ReviewForm, 'tracks':tracks, 'reports':reports})
+            track.save()
+            return render(request, 'reviewer/report.html', {'form':ReviewForm})
+    return render(request, 'reviewer/report.html', {'form':ReviewForm})

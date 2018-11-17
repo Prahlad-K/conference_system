@@ -14,7 +14,18 @@ def index(request):
     tracks = Track.objects.filter(reviewer=request.user)
     reports = ReviewReport.objects.all()
     
-    return render(request, 'reviewer/index.html', {'tracks':tracks, 'reports':reports})
+    total_tracks =  len(tracks)
+
+    reviewed_tracks = Track.objects.filter(reviewer = request.user, report_submitted= True)
+    no_reviewed_tracks = len(reviewed_tracks)
+
+    tracks_under_permission = Track.objects.filter(reviewer = request.user, permission_requested= True)
+    no_tracks_under_permission = len(tracks_under_permission)
+
+    approved_tracks = Track.objects.filter(reviewer = request.user, track_approved= True)
+    no_approved_tracks = len(approved_tracks)
+
+    return render(request, 'reviewer/index.html', {'tracks':tracks, 'reports':reports, 'no_reviewed_tracks': no_reviewed_tracks, 'no_tracks_under_permission':no_tracks_under_permission, 'total_tracks':total_tracks, 'no_approved_tracks':no_approved_tracks})
 
 
 def submit(request, track_id):

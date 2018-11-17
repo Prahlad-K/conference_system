@@ -6,13 +6,15 @@ from django.http import HttpResponse
 import datetime
 
 from payment_app.models import Payment
+from conference_manager.models import CustomUser
 
 # Create your views here.
 
 def display(request):
     payments = Payment.objects.all()
     roles = request.user.roles.all()
-    return render(request, 'registration_manager/display.html', {'payments':payments, 'roles':roles})
+    users = CustomUser.objects.all()
+    return render(request, 'registration_manager/display.html', {'payments':payments, 'roles':roles,'users':users})
 
 def approve(request, payment_id):
     payment = get_object_or_404(Payment, pk = payment_id)
@@ -22,6 +24,16 @@ def approve(request, payment_id):
     payments = Payment.objects.all()
     roles = request.user.roles.all()
     return render(request, 'registration_manager/display.html',  {'payments':payments, 'roles':roles})
+
+def approve_user(request, user_id):
+    user_ = get_object_or_404(CustomUser, pk = user_id)
+    user_.validated=True
+    user_.save()
+    payments = Payment.objects.all()
+    roles = request.user.roles.all()
+    users = CustomUser.objects.all()
+    return render(request, 'registration_manager/display.html',  {'payments':payments, 'roles':roles,'users':users})
+
 
 def delete(request, payment_id):
     Payment.objects.get(id=payment_id).delete()

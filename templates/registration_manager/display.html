@@ -8,7 +8,6 @@
 <h2>Here are the list of payments:</h2>
 <br>
 
-
 <table class="table">
     <thead>
       <tr>
@@ -22,6 +21,7 @@
       </tr>
     </thead>
     <tbody>
+       
         {% for payment in payments %}
       <tr>
         
@@ -49,6 +49,54 @@
              completed </td> <td> <a href = "{% url 'registration_manager:delete' payment.id %}">Remove? </a> </td>
             {% endif %}
       </tr>
+
+
+{% endfor %}
+</tbody>
+</table>
+
+
+{% else %}
+There are no payments made.
+
+{% endif %}
+
+{% if users %}
+<br>
+<h2>Here are the list of users yet to be approved:</h2>
+<br>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Username</th>
+        <th scope="col">Type of user</th>
+        <th scope="col">Validation Status</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+      <tr>
+        
+        <th scope="row">1</th>
+        <td>{{user.username}}</td>
+        <td> {% for role in roles %}
+            {% if role.id == 1 %} Author; 
+            {% elif role.id == 2 %} Reviewer; 
+            {% elif role.id == 3 %} Track Chair; 
+            {% elif role.id == 4 %} Conference Chair; 
+            {% elif role.id == 5 %} Registration Manager; 
+            {% elif role.id == 6 %} Conference Manager; 
+            {% endif %}
+        {% endfor %}
+        </td>      
+        <td>{{user.validated}}</td>
+        {% if user.validated == 0 %}
+        <td>
+            <a href = "{% url 'registration_manager:approve_user' user.id %}">Approve? </a> </td>
+        {% endif %}
+        </tr>
 
 
 {% endfor %}

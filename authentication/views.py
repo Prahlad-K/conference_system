@@ -32,6 +32,8 @@ def sign_in(request):
         user = authenticate(username=username,password=password)
         if user is None:
             return render(request,'authentication/login_page.html',{'error':'Invalid username or password'})
+        elif user.validated is False:
+            return render(request,'authentication/login_page.html',{'error':'Your signup is not yet approved'})
         else:
             login(request, user)
             print("Log in successful")
@@ -51,13 +53,9 @@ def sign_up(request):
         return render(request, 'authentication/sign_up.html', response)
     elif request.method == "POST":
         print(request.POST)
-        u = CustomUser.objects.create(username=request.POST['username'], first_name = request.POST['first_name'], last_name = request.POST['last_name'], email=request.POST['email'])
+        u = CustomUser.objects.create(validated=False,username=request.POST['username'], first_name = request.POST['first_name'], last_name = request.POST['last_name'], email=request.POST['email'])
         u.set_password(request.POST['password'])
         u.save()
         u.roles.add(Role.objects.get(id = request.POST['role']))
         roles = Role.objects.all()
-        response = {
-            'success': True,
-            'roles': roles
-        }
-        return render(request, 'authentication/sign_up.html', response)
+        return render(request, 'authentication/validation_page.html',{})

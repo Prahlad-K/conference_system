@@ -40,7 +40,7 @@
                 </div>
                 <div class="col-8">
                     <div class="container-fluid" style="margin-top:10%;">
-                            <form action="{% url 'conference_manager:add_user' %}" method="POST">
+                            <form action="{% url 'authentication:sign_up' %}" method="POST">
                                     {% csrf_token %}
                                     {% if success %}
                                         <div class="alert alert-success">

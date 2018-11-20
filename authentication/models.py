@@ -26,6 +26,6 @@ class Role(models.Model):
 
 class CustomUser(AbstractUser):
   roles = models.ManyToManyField(Role)
-  validated = models.BooleanField(null=True)
+  validated = models.BooleanField(default=False)
   def __str__(self):
         return '%s %s' % (self.first_name, self.last_name)

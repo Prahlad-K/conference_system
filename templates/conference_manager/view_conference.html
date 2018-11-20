@@ -1,0 +1,92 @@
+{% extends 'conference_manager/template.html' %}
+
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+
+        </div>
+        <div class="col-8">
+            <div class="container-fluid" style="margin-top:10%;">
+                    <form action="{% url 'conference_manager:view_conference' pk=conference.pk %}" method="POST">
+                            {% csrf_token %}
+                            {% if success %}
+                                <div class="alert alert-success">
+                                        <strong>Success!</strong> The details were updated.
+                                      </div>
+                                {% endif %}
+                                <div class="form-group row">
+                                    <label for="conference" class="col-sm-2 col-form-label">Conference Manager</label>
+                                    <div class="col-sm-10">
+                                            <select class="form-control" name="conference_manager" required>
+                                                {% for conference_manager in conference_managers %}
+                                                {% if conference_manager == conference.conference_manager %}
+                                                    <option value={{conference_manager.username}} selected>{{ conference_manager.first_name}} {{ conference_manager.last_name }}</option>
+                                                {% else %}
+                                                <option value={{conference_manager.username}}>{{ conference_manager.first_name}} {{ conference_manager.last_name }}</option>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                    </div>
+                                        
+                                </div>
+                                <br>
+                                <div class="form-group row">
+                                        <label for="conference" class="col-sm-2 col-form-label">Conference Chair</label>
+                                        <div class="col-sm-10">
+                                                <select class="form-control" name="conference_chair" required>
+                                                    {% for conference_chair in conference_chairs %}
+                                                    {% if conference_chair == conference.conference_chair %}
+                                                    <option value={{conference_chair.username}} selected>{{ conference_chair.first_name}} {{ conference_chair.last_name }}</option>
+                                                {% else %}
+                                                <option value={{conference_chair.username}}>{{ conference_chair.first_name}} {{ conference_chair.last_name }}</option>
+                                                {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                        </div>
+                                            
+                                    </div>
+                                    <br>
+    
+                                    <div class="form-group row">
+                                            <label for="conference" class="col-sm-2 col-form-label">Conference Name</label>
+                                            <div class="col-sm-10">
+                                                    <textarea class="form-control" rows="5" name="name" value = "{{conference.conference_name}}"></textarea>
+                                            </div>
+                                                
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="conference" class="col-sm-2 col-form-label">Conference Date</label>
+                                            <div class="col-sm-10">
+                                                   <input type = "date" name = "date" value = "{{conference.conference_date}}"> 
+                                            </div>
+                                                
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Conference Type</label>
+                                            <div class="col-sm-10">
+                                                    <select class="form-control" name="type">
+                                                            {% for type in types %}
+                                                                <option value={{type.id}}>{{ type }}</option>
+                                                            {% endfor %}
+                                                    </select>
+                                            </div> 
+                                    </div>
+                                        
+                                    <div class="text-center"> 
+                                        <button type="submit" style="display:inline-block"class="btn btn-secondary text-center">Update Conference</button>
+                                        <a href="{% url 'conference_manager:delete_conference' pk=conference.pk %}" class="btn btn-danger text-center" role="button">Delete Conference</a>
+                                    </div>
+                                    
+
+                    </form>
+            </div>
+        </div>
+        <div class="col">
+        
+        </div>
+    </div>
+</div>
+{% endblock %}

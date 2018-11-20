@@ -253,8 +253,10 @@ function myFunction() {
         {% csrf_token %}
         <input type = "submit" value = "OK">
     </form>
+    {% elif payment.approved %}
+    <p>Transaction is Approved.</p>
     {% else %}
-    <p>Transaction is in Approval Phase.</p>
+    <p>Transaction is in approval phase.</p>
     {% endif %}
     </div>
   </div>

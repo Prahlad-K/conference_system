@@ -13,4 +13,5 @@ class Track(models.Model):
     report = models.ForeignKey(ReviewReport,on_delete=models.CASCADE,related_name='respaper',null=True)
     paper_submitted = models.BooleanField(default = False)
     report_submitted = models.BooleanField(default = False)
-    report_approved = models.BooleanField(default = False)
+    permission_requested = models.BooleanField(default = False)
+    track_approved = models.BooleanField(default = False)

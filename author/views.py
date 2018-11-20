@@ -26,7 +26,10 @@ def index(request):
     reviewed_tracks = Track.objects.filter(author = request.user, report_submitted= True)
     no_reviewed_tracks = len(reviewed_tracks)
 
-    approved_tracks = Track.objects.filter(author = request.user, report_approved= True)
+    tracks_under_permission = Track.objects.filter(reviewer = request.user, permission_requested= True)
+    no_tracks_under_permission = len(tracks_under_permission)
+
+    approved_tracks = Track.objects.filter(author = request.user, track_approved= True)
     no_approved_tracks = len(approved_tracks)
 
     if request.method == 'POST':
@@ -51,6 +54,6 @@ def index(request):
             track.paper_submitted = True
             track.save()
             messages.info(request, 'Your response has been recorded successfully!')
-        return render(request,'author/index.html',{'form':AdPaperForm,'tracks':tracks, 'no_submitted_tracks':no_submitted_tracks, 'no_reviewed_tracks':no_reviewed_tracks, 'no_approved_tracks':no_approved_tracks, 'total_tracks':total_tracks})
+        return render(request,'author/index.html',{'form':AdPaperForm,'tracks':tracks, 'no_submitted_tracks':no_submitted_tracks, 'no_reviewed_tracks':no_reviewed_tracks, 'no_approved_tracks':no_approved_tracks, 'total_tracks':total_tracks, 'no_tracks_under_permission':no_tracks_under_permission})
     
-    return render(request,'author/index.html',{'form':AdPaperForm,'tracks':tracks, 'no_submitted_tracks':no_submitted_tracks, 'no_reviewed_tracks':no_reviewed_tracks, 'no_approved_tracks':no_approved_tracks, 'total_tracks':total_tracks})
+    return render(request,'author/index.html',{'form':AdPaperForm,'tracks':tracks, 'no_submitted_tracks':no_submitted_tracks, 'no_reviewed_tracks':no_reviewed_tracks, 'no_approved_tracks':no_approved_tracks, 'total_tracks':total_tracks, 'no_tracks_under_permission':no_tracks_under_permission})

@@ -9,6 +9,74 @@ from .models import *
 def index(request):
     return render(request, 'conference_manager/index.html', {})
 
+def create_conference(request):
+    if request.method == "GET":
+        conference_managers = CustomUser.objects.filter(roles__id = 6)
+        conference_chairs = CustomUser.objects.filter(roles__id = 4)
+        types = ConferenceTypes.objects.all()
+
+        response = {}
+        response['conference_managers'] = conference_managers
+        response['conference_chairs'] = conference_chairs
+        response['types'] = types
+
+        return render(request, 'conference_manager/create_conference.html', response)
+    elif request.method == "POST":
+        conference_manager = CustomUser.objects.get(username = request.POST['conference_manager'])
+        conference_chair = CustomUser.objects.get(username = request.POST['conference_chair'])
+        conference = Conference.objects.create(conference_chair = conference_chair, conference_manager = conference_manager, conference_name = request.POST['name'], conference_date = request.POST['date'], conference_type = ConferenceTypes.objects.get(id = request.POST['type']))
+        conference.save()
+        types = ConferenceTypes.objects.all()
+        conference_managers = CustomUser.objects.filter(roles__id = 6)
+        conference_chairs = CustomUser.objects.filter(roles__id = 4)
+
+        response = {}
+        response['success'] = True
+        response['conference_managers'] = conference_managers
+        response['conference_chairs'] = conference_chairs
+        response['types'] = types
+        return render(request, 'conference_manager/create_conference.html', response)
+
+def view_conference(request, pk):
+    if request.method == "GET":
+        conference = Conference.objects.get(pk = pk)
+        conference_managers = CustomUser.objects.filter(roles__id = 6)
+        conference_chairs = CustomUser.objects.filter(roles__id = 4)
+        types = ConferenceTypes.objects.all()
+        response = {
+            'conference': conference,
+            'conference_managers': conference_managers, 
+            'conference_chairs': conference_chairs,
+            'types': types,
+        }
+        return render(request, 'conference_manager/view_conference.html', response)
+    elif request.method == "POST":
+        print(request.POST)
+        conference = Conference.objects.get(pk = pk)
+        conference.conference_manager = CustomUser.objects.get(username=request.POST['conference_manager'])
+        conference.conference_chair = CustomUser.objects.get(username=request.POST['conference_chair'])
+        conference.conference_name = request.POST['name']
+        conference.conference_date = request.POST['date']
+        conference.conference_type = ConferenceTypes.objects.get(id = request.POST['type'])
+        conference.save()
+        types = ConferenceTypes.objects.all()
+        conference_managers = CustomUser.objects.filter(roles__id = 6)
+        conference_chairs = CustomUser.objects.filter(roles__id = 4)
+
+        response = {}
+        response['success'] = True
+        response['conference'] = conference
+        response['conference_managers'] = conference_managers
+        response['conference_chairs'] = conference_chairs
+        response['types'] = types
+        return render(request, 'conference_manager/view_conference.html', response)
+
+def view_conferences(request):
+    conferences = Conference.objects.all()
+    response = {}
+    response['conferences'] = conferences
+    return render(request, 'conference_manager/view_conferences.html', response)
+
 def create_track(request):
     if request.method == "GET":
         authors = CustomUser.objects.filter(roles__id = 1)
@@ -177,6 +245,13 @@ def view_track(request, pk):
             'success': True
         }
         return render(request, 'conference_manager/view_track.html', response)
+
+def delete_conference(request, pk):
+    try:
+        Conference.objects.get(pk=pk).delete()
+        return view_conferences(request)
+    except:
+        return view_conferences(request)
 
 def delete_track(request, pk):
     try:

@@ -15,6 +15,12 @@
                 <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
+                            <a class="nav-link" href="{% url 'conference_manager:view_conferences' %}">View Conferences</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'conference_manager:create_conference' %}">Create Conference</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{% url 'conference_manager:view_tracks' %}">View Tracks</a>
                         </li>
                         <li class="nav-item">

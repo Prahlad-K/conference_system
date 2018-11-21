@@ -7,5 +7,5 @@ app_name = 'author'
 
 urlpatterns=[
      url('index', views.index,name="index"),
-     path('<int:track_paper_id>/edit',views.edit,name="edit"),
+     path('<int:track_id>/edit',views.edit,name="edit"),
 ]

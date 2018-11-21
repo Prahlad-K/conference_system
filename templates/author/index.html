@@ -199,10 +199,9 @@
                 </div>    
                 <div class="col-lg-8">
                         <i class="fa fa-edit"></i>
-                        <form action= "{% url 'author:edit' track.paper.id %}" method="post">
-                          {% csrf_token %}
-                          <input type = "submit" value = "Edit Submission">
-                      </form>
+                        <a href= "{% url 'author:edit' track.id %}" >
+                          Edit Submission
+                        </a>
             </div>
             </div>
             <div style="padding-top:20px;">

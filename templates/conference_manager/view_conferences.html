@@ -1,0 +1,61 @@
+{% extends 'conference_manager/template.html' %}
+
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+
+        </div>
+        <div class="col-8">
+            <br>
+            <h2 class="text-center">
+                Conferences
+            </h2>
+            <div class="container-fluid" style="margin-top:10%;">
+                {% for conference in conferences %}
+                <div>
+                        <div class="row" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                          <div class="col-3">
+                            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical" style="padding:10%;">
+                              <a class="nav-link active show" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home{{conference.pk}}" role="tab" aria-controls="v-pills-home" aria-selected="true">Conference Name</a>
+                              <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile{{conference.pk}}" role="tab" aria-controls="v-pills-profile" aria-selected="false">Conference Manager</a>
+                              <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages{{conference.pk}}" role="tab" aria-controls="v-pills-messages" aria-selected="false">Conference Chair</a>
+                              <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings{{conference.pk}}" role="tab" aria-controls="v-pills-settings" aria-selected="false">Conference Date</a>
+                              <a class="nav-link" id="v-pills-types-tab" data-toggle="pill" href="#v-pills-types{{conference.pk}}" role="tab" aria-controls="v-pills-types" aria-selected="false">Conference Type</a>
+                              <a class="nav-link" href="{% url 'conference_manager:view_conference' pk=conference.pk %}">Edit</a>
+                            </div>
+                          </div>
+                          <div class="col-9" style="padding:10%;">
+                            <div class="tab-content" id="v-pills-tabContent" style="text-align: center;
+                            vertical-align: middle;">
+                              <div class="tab-pane fade active show" id="v-pills-home{{conference.pk}}" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                <p class="lead">{{ conference.conference_name }}</p>
+                              </div>
+                              <div class="tab-pane fade" id="v-pills-profile{{conference.pk}}" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                <h2>{{conference.conference_manager }}</h2>
+                              </div>
+                              <div class="tab-pane fade" id="v-pills-messages{{conference.pk}}" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                                <h2>{{ conference.conference_chair }}</h2>
+                              </div>
+                              <div class="tab-pane fade" id="v-pills-settings{{conference.pk}}" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                                <h2>{{ conference.conference_date }}</h2>
+                              </div>
+                              <div class="tab-pane fade" id="v-pills-types{{conference.pk}}" role="tabpanel" aria-labelledby="v-pills-types-tab">
+                                <h2>{{ conference.conference_type }}</h2>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col">
+        
+        </div>
+    </div>
+</div>
+{% endblock %}

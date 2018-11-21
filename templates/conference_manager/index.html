@@ -48,7 +48,8 @@
       ";> -->
       <div class="mx-auto"> 
           <br><br><br>
-
+        <a href="{% url 'conference_manager:create_conference' %}" class="btn btn-secondary" role="button" style="margin:7%;">Create Conference</a>
+        <a href="{% url 'conference_manager:view_conferences' %}" class="btn btn-secondary" role="button" style="margin:7%;">View Conferences</a>
         <a href="{% url 'conference_manager:view_tracks' %}" class="btn btn-secondary" role="button" style="margin:9%;" >View Tracks</a>
         <a href="{% url 'conference_manager:create_track' %}" class="btn btn-secondary" role="button" style="margin:7%;">Create Track</a>
         <a href="{% url 'conference_manager:add_user' %}" class="btn btn-secondary" role="button" style="margin:7%;">Add User</a>

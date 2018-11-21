@@ -199,59 +199,10 @@
                 </div>    
                 <div class="col-lg-8">
                         <i class="fa fa-edit"></i>
-                        <button class="mybutton" data-toggle="modal" data-target="#exampleModalCenter">
-                                <b>&nbsp; Edit Submission</b>
-                        </button>
-                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Research Paper Submission</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                        <form action="{%url 'author:index' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label for="inputAddress">Research Paper Title</label>
-                            <div id="inputAddress">
-                            {{ form.non_field_errors }}
-                            {{ form.title.errors }}
-                            {{ form.title }}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                                <label for="inputAddress2">Authors</label>
-                                {{ form.authors.errors }}
-                                <div id="inputAddress2">
-                                {{ form.authors }}
-                                </div>
-                        </div>
-                        <div class="form-row">
-                                <div class="col-md-6">
-                                <label for="inputCity">Type of Submission</label>
-                                <div id="inputCity">
-                                        {{ form.type.errors }}
-                                        {{ form.type }}   
-                                </div>
-                                </div>
-                                <div class="col-md-6">
-                                        <label for="inputCity">Upload Paper</label>
-                                                {{ form.docfile }}    
-                                </div>
-                        </div>
-                        <br>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                    </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-                </div>
-                </div>
-                </div>
+                        <form action= "{% url 'author:edit' track.paper.id %}" method="post">
+                          {% csrf_token %}
+                          <input type = "submit" value = "Edit Submission">
+                      </form>
             </div>
             </div>
             <div style="padding-top:20px;">

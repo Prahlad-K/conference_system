@@ -57,3 +57,8 @@ def index(request):
         return render(request,'author/index.html',{'form':AdPaperForm,'tracks':tracks, 'no_submitted_tracks':no_submitted_tracks, 'no_reviewed_tracks':no_reviewed_tracks, 'no_approved_tracks':no_approved_tracks, 'total_tracks':total_tracks, 'no_tracks_under_permission':no_tracks_under_permission})
     
     return render(request,'author/index.html',{'form':AdPaperForm,'tracks':tracks, 'no_submitted_tracks':no_submitted_tracks, 'no_reviewed_tracks':no_reviewed_tracks, 'no_approved_tracks':no_approved_tracks, 'total_tracks':total_tracks, 'no_tracks_under_permission':no_tracks_under_permission})
+
+def edit(request,track_paper_id):
+    ins = ResearchPaper.objects.get(id=track_paper_id)
+    myForm = AdPaperForm(instance=ins)
+    return render(request,'author/edit_submission.html',{'form':myForm})    

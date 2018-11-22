@@ -1,5 +1,5 @@
 from django.db import models
-
+import datetime
 # Create your models here.
 
 PERF_CHOICES = (
@@ -15,7 +15,8 @@ class ReviewReport(models.Model):
     research_sig = models.CharField(max_length = 30, choices = PERF_CHOICES, null = True)
     lit_review = models.CharField(max_length = 30, choices = PERF_CHOICES, null = True)
     methodology = models.CharField(max_length = 30, choices = PERF_CHOICES, null = True)
-    
+    submission_date = models.DateField(default=datetime.date.today)
+    days_left = models.IntegerField(null = True)
     description = models.CharField(max_length = 200, null = True)
 
     def __str__(self):

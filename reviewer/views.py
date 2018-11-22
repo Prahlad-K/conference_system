@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from .models import ReviewReport  
 from .forms import ReviewForm
 from conference_manager.models import Track
+import datetime
 
 
 def index(request):
@@ -15,6 +16,11 @@ def index(request):
     reports = ReviewReport.objects.all()
     
     total_tracks =  len(tracks)
+    for track in tracks:
+        print(track.paper.submission_date)
+        dt =  datetime.date.today()- track.paper.submission_date
+        track.paper.days_left = 7 - dt.days
+
 
     reviewed_tracks = Track.objects.filter(reviewer = request.user, report_submitted= True)
     no_reviewed_tracks = len(reviewed_tracks)

@@ -1,5 +1,6 @@
 import django
 from authentication.models import CustomUser, Role
+from conference_manager.models import ConferenceTypes
 from django.contrib.auth.models import Group
 
 def run():
@@ -15,6 +16,10 @@ def run():
     u.roles.add(Role.objects.create(id=5))
     u.roles.add(Role.objects.create(id=6))
 
-    print("All the roles have been assigned to the superuser. You may now run the server and log in.\n")
+    ConferenceTypes.objects.create(id =1)
+    ConferenceTypes.objects.create(id =2)
+    ConferenceTypes.objects.create(id =3)
+    
+    print("All the roles have been assigned to the superuser. Conference types have been initialized. You may now run the server and log in.\n")
 
 

@@ -25,6 +25,6 @@ class ReviewForm(forms.ModelForm):
     
     class Meta:
         model = ReviewReport
-        fields = '__all__'
+        fields = ['problem_statement', 'research_sig', 'lit_review', 'methodology', 'description']
         
     

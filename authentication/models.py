@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
 # Create your models here.
 class Role(models.Model):
   AUTHOR = 1
@@ -27,5 +26,6 @@ class Role(models.Model):
 class CustomUser(AbstractUser):
   roles = models.ManyToManyField(Role)
   validated = models.BooleanField(default=False)
+
   def __str__(self):
         return '%s %s' % (self.first_name, self.last_name)

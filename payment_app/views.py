@@ -10,7 +10,6 @@ from payment_app.forms import collectPaymentForm
 from payment_app.models import Payment
 
 def index(request):
-
     try:
         payment = Payment.objects.get(user = request.user)
         return render(request, 'payment_app/status.html', {'payment':payment})

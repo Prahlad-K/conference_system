@@ -12,6 +12,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 
 import random
+import datetime
 
 #Create your views here.
 from .models import ResearchPaper
@@ -32,6 +33,11 @@ def index(request):
     approved_tracks = Track.objects.filter(author = request.user, track_approved= True)
     no_approved_tracks = len(approved_tracks)
 
+    for track in tracks:
+        print(track.paper.submission_date)
+        dt =  datetime.date.today()- track.paper.submission_date
+        track.paper.days_left = 7 - dt.days
+
     if request.method == 'POST':
         form = AdPaperForm(request.POST,request.FILES)
         if form.is_valid():
@@ -41,13 +47,16 @@ def index(request):
             track.author = request.user
             revs = CustomUser.objects.filter(roles = Role.objects.get(id=2), is_superuser = False)
            #selects random reviewer
+            print(revs)
+
             index = random.randint(0,len(revs)-1)
             track.reviewer = revs[index]
 
             trcs = CustomUser.objects.filter(roles = Role.objects.get(id=3), is_superuser = False)
-           #selects random track chair 
+           #selects random track chair
+            print(trcs)
+
             index = random.randint(0,len(trcs)-1)
-            
             track.track_chair = trcs[index]
             
             track.paper = m

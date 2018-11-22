@@ -22,5 +22,5 @@ class AdPaperForm(forms.ModelForm):
               )
     class Meta:
         model = ResearchPaper
-        fields = '__all__'
+        fields = ['title', 'authors', 'type', 'docfile']
         

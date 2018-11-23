@@ -63,7 +63,6 @@ def index(request):
             track.paper_submitted = True
             track.save()
             messages.info(request, 'Your response has been recorded successfully!')
-
             tracks = Track.objects.filter(author=request.user)
             total_tracks = len(tracks)
 

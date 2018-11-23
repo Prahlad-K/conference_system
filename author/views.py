@@ -77,7 +77,13 @@ def index(request):
 
             approved_tracks = Track.objects.filter(author = request.user, track_approved= True)
             no_approved_tracks = len(approved_tracks)
-        return render(request,'author/index.html',{'form':AdPaperForm,'tracks':tracks, 'no_submitted_tracks':no_submitted_tracks, 'no_reviewed_tracks':no_reviewed_tracks, 'no_approved_tracks':no_approved_tracks, 'total_tracks':total_tracks, 'no_tracks_under_permission':no_tracks_under_permission})
+
+            for track in tracks:
+                print(track.paper.submission_date)
+                dt =  datetime.date.today()- track.paper.submission_date
+                track.paper.days_left = 7 - dt.days
+
+            return render(request,'author/index.html',{'form':AdPaperForm,'tracks':tracks, 'no_submitted_tracks':no_submitted_tracks, 'no_reviewed_tracks':no_reviewed_tracks, 'no_approved_tracks':no_approved_tracks, 'total_tracks':total_tracks, 'no_tracks_under_permission':no_tracks_under_permission})
     
     return render(request,'author/index.html',{'form':AdPaperForm,'tracks':tracks, 'no_submitted_tracks':no_submitted_tracks, 'no_reviewed_tracks':no_reviewed_tracks, 'no_approved_tracks':no_approved_tracks, 'total_tracks':total_tracks, 'no_tracks_under_permission':no_tracks_under_permission})
 

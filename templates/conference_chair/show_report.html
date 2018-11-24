@@ -1,0 +1,96 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Conference Chair</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'author/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'author/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">    
+    <style>
+    a:hover{
+      text-decoration: none;
+    }  
+    body {
+    padding-top: 75px;
+    }
+
+    .p_item{
+    padding: 20px;
+    border-bottom:1px solid lightslategray; 
+    }
+    .mybutton {
+     background:none!important;
+     color:inherit;
+     border:none; 
+     padding:0!important;
+     font: inherit;
+     /*border is optional*/
+     border-bottom:1px solid #444; 
+     cursor: pointer;
+    }
+    .left-column
+    {
+        text-align: left;
+        font-weight: bold;
+    }
+    .rc::before{
+      content:":";
+    }
+    </style>
+  </head>
+  <body>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="mainNav">
+          <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="{% url 'conference_chair:index' %}"><b>Conference Chair</b></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+              <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="{% url 'conference_chair:index' %}">Back</a>
+                          </li>
+                <li class="nav-item">
+                  <a class="nav-link js-scroll-trigger" href="{% url 'payment_app:index' %}">Pay Fee</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link js-scroll-trigger" href="{% url 'authentication:logout_view' %}">Logout</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <div class="card mx-auto" style="padding-bottom:20px;margin-bottom: 50px; width: 60rem;">
+                <div class="card-body">
+
+                        <div class="col">
+        
+                        </div>
+                        <div class="col-8">
+                            <div class="container-fluid" style="margin-top:10%;">
+                            <h2>Review Report for "{{track.paper.title}}:"</h2>
+                            <br>
+                            <h3><em>Problem Statement: </em>{{track.report.problem_statement}}</h3>
+                            <br>
+                            <h3><em>Research Significance: </em>{{track.report.research_sig}}</h3>
+                            <br>
+                            <h3><em>Literature review:</em> {{track.report.lit_review}}</h3>
+                            <br>
+                            <h3><em>Methodology: </em>{{track.report.methodology}}</h3>
+                            <br>
+                            <h3><em>Description: </em>{{track.report.description}}</h3>
+                            <br>
+                            </div>
+                        </div>
+                </div>
+        </div>
+    </body>
+</html>

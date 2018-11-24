@@ -55,6 +55,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
               <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                      <a class="nav-link js-scroll-trigger" href="{% url 'authentication:index' %}">Back</a>
+                    </li>
                 <li class="nav-item">
                   <a class="nav-link js-scroll-trigger" href="{% url 'payment_app:index' %}">Pay Fee</a>
                 </li>
@@ -187,7 +190,7 @@
         </div>
         <br>
         <h2 style="padding-top: 1px;font-family: 'SFMono-Regular',Consolas,'Liberation Mono',Menlo,Courier,monospace;" class="text-center">
-            YOUR SUBMISSIONS
+            Your Submissions
         </h2>
         {% for track in tracks %}
         {% if track.paper_submitted  %}
@@ -196,7 +199,7 @@
               <h5 style="padding-bottom:3px; border-bottom:1px solid #444;"  class="card-title">{{ track.paper.title }}</h5>
               <div class="row">
                   <div class="col-lg-8">
-                <h6 ><em>by </em>{{track.paper.authors}}</h6>
+                <h6 ><em>authored by </em>{{track.paper.authors}}</h6>
                 </div>
                 <div class="col-lg-4">
                 <em>Submitted on&nbsp;</em>{{track.paper.submission_date}}
@@ -260,7 +263,7 @@
               <h6 ><em>by </em>{{track.paper.authors}}</h6>
               </div>
               <div class="col-lg-4">
-              <em>Submitted on&nbsp;</em>{{track.paper.submission_date}}
+              <em>Report submitted on&nbsp;</em>{{track.report.submission_date}}
               </div>
               </div>
               <div class="row">
@@ -311,78 +314,15 @@
         <br>
         {% endif %}
         {% endfor %}
-        {% for track in tracks %}
-        {% if track.report_submitted %}
-        <div class="card">
-            <div class="card-body">
-              <h5 style="padding-bottom:3px; border-bottom:1px solid #444;"  class="card-title">{{ track.paper.title }}</h5>
-              <div class="row">
-                  <div class="col-lg-8">
-                <h6 ><em>by </em>{{track.paper.authors}}</h6>
-                </div>
-                <div class="col-lg-4">
-                <em>Submitted on&nbsp;</em>{{track.paper.submission_date}}
-                </div>
-                </div>
-              <div class="row">
-              <div class="col-md-6">
-                      <table class="table table-sm">
-                              <tbody>
-                                <tr>
-                                  <td><em>Reviewer</em></td>
-                                  <td>{{ track.reviewer.username }}</td>
-                                  
-                                </tr>
-                                <tr>
-                                  <td><em>Track Chair</em></td>
-                                  <td>{{ track.track_chair.username }}</td>
-                                </tr>
-                                <tr>
-                                    <td><em>Status</em></td>
-                                    <td>Reviewed</td>
-                                  </tr>
-                              </tbody>
-                            </table> 
-              </div>
-              <div class="col-md-6">
-                  <div class="row">
-                        <div class="col-md-6">
-                        <div class="row">
-                             <i class="fa fa-folder-open fa-3x"></i>
-                        </div>
-                          <div class="row">
-                          <a style="color:black;" target="_blank" href="{{track.paper.docfile.url}}">&nbsp; Read Paper</a>    
-                          </div>
-                        </div>  
-                        <div class="col-md-6">
-                            <div class="row">
-                                   
-                                <i class="fa fa-edit fa-3x"></i>
-                            </div>
-                                <div class="row">
-                                <a style="color:black;" href="{% url 'author:edit' track.id %}">Edit Submission</a>    
-                                
-                            </div>  
-                        </div>       
-                </div>
-                </div>
-              </div>
-            </div>
-        </div>
-        <br>
-        {% endif %}
-        {% endfor %}
+        
         {% for track in tracks %}
         {% if track.permission_requested %}
         <div class="card">
             <div class="card-body">
               <h5 style="padding-bottom:3px; border-bottom:1px solid #444;"  class="card-title">{{ track.paper.title }}</h5>
               <div class="row">
-                  <div class="col-lg-8">
+                  <div class="col-lg-12">
                 <h6 ><em>by </em>{{track.paper.authors}}</h6>
-                </div>
-                <div class="col-lg-4">
-                <em>Submitted on&nbsp;</em>{{track.paper.submission_date}}
                 </div>
                 </div>
               <div class="row">
@@ -439,12 +379,8 @@
             <div class="card-body">
               <h5 style="padding-bottom:3px; border-bottom:1px solid #444;"  class="card-title">{{ track.paper.title }}</h5>
               <div class="row">
-                  <div class="col-lg-8">
+                  <div class="col-lg-12">
                 <h6 ><em>by </em>{{track.paper.authors}}</h6>
-                </div>
-                <div class="col-lg-4">
-                <em>Submitted on&nbsp;</em>{{track.paper.submission_date}}
-                </div>
                 </div>
               <div class="row">
               <div class="col-md-6">

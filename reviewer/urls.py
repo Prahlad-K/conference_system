@@ -5,5 +5,5 @@ app_name = 'reviewer'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('<int:track_id>/submit', views.submit, name='submit'),
+    path('<int:track_id>/edit', views.edit, name='edit'),
 ]

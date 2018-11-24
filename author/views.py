@@ -115,6 +115,7 @@ def edit(request,track_id):
             track = Track.objects.get(id=track_id)
             track.paper = m
             track.paper_submitted = True
+            track.description = paper.title
             track.save()
             messages.info(request, 'Your response has been recorded successfully!')
             tracks = Track.objects.filter(author=request.user)

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate,login,logout
 from django.shortcuts import get_object_or_404, render, redirect
-from conference_manager.models import Track
+from conference_manager.models import Track, Conference
 from .models import *
 # Create your views here.
 
@@ -12,7 +12,7 @@ def index(request):
         return choose_profile(request, request.user)
     else:
         print("Needs authentication")
-        response = {}
+        
         return render(request, 'authentication/login_page.html', {})
 
 def choose_profile(request, user):
@@ -20,7 +20,17 @@ def choose_profile(request, user):
     roles = request.user.roles.all()
     response['roles'] = roles
     print(roles)
-    return render(request, 'authentication/main_page.html', response)
+    conferences = Conference.objects.all()
+    superuser = False
+    if len(conferences)==0:
+        if user.is_superuser:
+            superuser= True
+        return render(request, 'authentication/error_page.html', {'superuser':superuser})
+    else:
+        manager = CustomUser.objects.get(roles = Role.objects.get(id = 6), is_superuser = False)
+        conference = Conference.objects.get(conference_manager = manager)
+        response['conference'] = conference
+        return render(request, 'authentication/main_page.html', response)
 
 def sign_in(request): 
     print("Sign in request")

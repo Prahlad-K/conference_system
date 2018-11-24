@@ -66,81 +66,39 @@
     <div style="padding:10px;color: white;background-color: black;">
         <div class="row">
             <div class="mx-auto">
-                <h1 class="mb-5">{{conference.conference_name}}: A {{conference.conference_type}}</h1>
+                <h1 class="mb-5">NIT Warangal Conference Management System</h1>
             </div>
         </div>
         <div class="row">
             <div class="mx-auto">
-              <h4 style="font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,Courier,monospace;"class="mb-2">{{conference.conference_date}}</h4>
+              <h4 style="font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,Courier,monospace;"class="mb-2">2018/h4>
             </div>
           </div>
     </div>
     <!-- Icons Grid -->
+    {% if superuser %}
     <section class="features-icons bg-light text-center">
-      <div class="container">
-            <h2 style="font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,Courier,monospace;"class="text-center">Your Roles</h2>
-            <hr style="background:blue;height: 2px;"width="150px">
-        <div class="row mx-auto">
-        {% for role in roles %}
-        {% if role.id == 1 %} 
-          <div class="col-lg-4 mx-auto">
-            <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-              <div class="features-icons-icon d-flex">
-                <i class="fa fa-pencil m-auto text-primary"></i>
+            <div class="container">
+                  <h3><em>Start the conference. We're here for the rest. </em></h3>
+              <div class="row mx-auto">
+              
+                <div class="col-lg-4 mx-auto">
+                  <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                    <div class="features-icons-icon d-flex">
+                      <i class="fa fa-users m-auto text-primary"></i>
+                    </div>
+                    <h3><a href = "{% url 'conference_manager:create_conference'%}" >Create a conference</a></h3>
+                  </div>
+                </div>
               </div>
-              <h3><a href = "{% url 'author:index'%}" >Author</a></h3>
             </div>
-          </div>
-          {% elif role.id == 2 %} 
-          <div class="col-lg-4 mx-auto">
-            <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-              <div class="features-icons-icon d-flex">
-                <i class="fa fa-list-alt m-auto text-primary"></i>
-              </div>
-              <h3><a href = "{% url 'reviewer:index'%}" >Reviewer</a></h3>
-            </div>
-          </div>
-          {% elif role.id == 3 %} 
-          <div class="col-lg-4 mx-auto">
-            <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-              <div class="features-icons-icon d-flex">
-                <i class="fa fa-folder m-auto text-primary"></i>
-              </div>
-              <h3><a href = "{% url 'track_chair:index'%}" >Track Chair</a></h3>
-            </div>
-          </div>
-          {% elif role.id == 4 %} 
-          <div class="col-lg-4 mx-auto">
-            <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-              <div class="features-icons-icon d-flex">
-                <i class="fa fa-user m-auto text-primary"></i>
-              </div>
-              <h3><a href = "{% url 'conference_chair:index'%}" >Conference Chair</a></h3>
-            </div>
-          </div>
-          {% elif role.id == 6 %} 
-          <div class="col-lg-4 mx-auto">
-            <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-              <div class="features-icons-icon d-flex">
-                <i class="fa fa-university m-auto text-primary"></i>
-              </div>
-              <h3><a href = "{% url 'conference_manager:index'%}" >Conference Manager</a></h3>
-            </div>
-          </div>
-          {% else %} 
-          <div class="col-lg-4 mx-auto">
-            <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-              <div class="features-icons-icon d-flex">
-                <i class="fa fa-money m-auto text-primary"></i>
-              </div>
-              <h3><a href = "{% url 'registration_manager:display'%}" >Registration Manager</a></h3>
-            </div>
-          </div>
-          {% endif %}
-          {% endfor %}
-        </div>
-      </div>
+          </section>
+
+    {% else %}
+    <section class="features-icons bg-light text-center">
+    <h3><em>The conference is not yet created. Please wait until the manager starts it. Thank you for your cooperation!</em></h3>  
     </section>
+    {% endif %}
 
    
     <!-- Footer -->

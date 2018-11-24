@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.views.generic import FormView
 from .models import ResearchPaper 
 from .forms import AdPaperForm
-from conference_manager.models import Track
+from conference_manager.models import Track, Conference
 from payment_app.models import Payment
 from django.contrib import messages
 from django.http import HttpResponseRedirect
@@ -37,6 +37,20 @@ def index(request):
         print(track.paper.submission_date)
         dt =  datetime.date.today()- track.paper.submission_date
         track.paper.days_left = 7 - dt.days
+
+    paid = False
+    payments = Payment.objects.filter(completed = True)
+    for payment in payments:
+        if payment.user ==request.user:
+            paid = True
+    
+    if not paid:
+        manager = CustomUser.objects.get(roles = Role.objects.get(id = 6), is_superuser = False)
+        conference = Conference.objects.get(conference_manager = manager)
+        response = {}
+        response['conference'] = conference
+        return render(request, 'author/payfee.html', response)
+            
 
     if request.method == 'POST':
         form = AdPaperForm(request.POST,request.FILES)

@@ -7,7 +7,10 @@ from .models import *
 # Create your views here.
 
 def index(request):
-    return render(request, 'conference_manager/index.html', {})
+    response = {}
+    conferences = Conference.objects.all()
+    response['conferences'] = conferences
+    return render(request, 'conference_manager/index.html', {'conferences':conferences})
 
 def create_conference(request):
     if request.method == "GET":
@@ -122,8 +125,38 @@ def add_user(request):
         print(request.POST)
         u = CustomUser.objects.create(username=request.POST['username'], first_name = request.POST['first_name'], last_name = request.POST['last_name'], email=request.POST['email'])
         u.set_password(request.POST['password'])
+        
+        try:
+            value = request.POST['Author']
+            u.roles.add(Role.objects.get(id=1))
+        except:
+            pass
+        try:
+            value = request.POST['Reviewer']
+            u.roles.add(Role.objects.get(id=2))
+        except:
+            pass
+        try:
+            value = request.POST['Track Chair']
+            u.roles.add(Role.objects.get(id=3))
+        except:
+            pass
+        try:
+            value = request.POST['Conference Chair']
+            u.roles.add(Role.objects.get(id=4))
+        except:
+            pass
+        try:
+            value = request.POST['Registration Manager']
+            u.roles.add(Role.objects.get(id=5))
+        except:
+            pass
+        try:
+            value = request.POST['Conference Manager']
+            u.roles.add(Role.objects.get(id=6))
+        except:
+            pass
         u.save()
-        u.roles.add(Role.objects.get(id = request.POST['role']))
         roles = Role.objects.all()
         response = {
             'success': True,

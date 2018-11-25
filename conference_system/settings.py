@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    #'email_system.apps.SendEmailConfig'
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,9 +46,12 @@ INSTALLED_APPS = [
     'conference_chair',
     'conference_manager',
     'registration_manager',
-    'payment_app'
-
+    'payment_app',
+    'email_system',
+    'postman'
 ]
+
+POSTMAN_AUTO_MODERATE_AS = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -64,7 +68,7 @@ ROOT_URLCONF = 'conference_system.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'),],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),os.path.join(BASE_DIR,'postman\templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -85,10 +89,13 @@ WSGI_APPLICATION = 'conference_system.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'conference_system',
-        'USER': 'cs_root',
-        'PASSWORD': 'group_123',
+         'ENGINE': 'mysql.connector.django',
+         'NAME': 'conference_system',
+        'USER': 'root',
+        'PASSWORD': 'root', #Changed!-Anushka
+        'OPTIONS': {
+      'autocommit': True,
+    },
     }
 }
 
@@ -125,6 +132,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+#FIXTURES
+FIXTURE_DIRS=[
+    os.path.join(BASE_DIR,"fixtures"),
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
@@ -134,9 +145,18 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'sitestatic')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     ]
-    
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 #Configure customer users
-AUTH_USER_MODEL = "authentication.CustomUser" 
+AUTH_USER_MODEL = "authentication.CustomUser"
+
+#email_system
+#email
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_PASSWORD = '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'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

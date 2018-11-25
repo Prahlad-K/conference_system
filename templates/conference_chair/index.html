@@ -1,4 +1,6 @@
-{% load staticfiles %}
+{% load static %}
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,279 +14,170 @@
     <title>Conference Chair</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="{% static 'author/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'author/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">    
-    <style>
-    a:hover{
-      text-decoration: none;
-    }  
-    body {
-    padding-top: 75px;
-    }
-
-    .p_item{
-    padding: 20px;
-    border-bottom:1px solid lightslategray; 
-    }
-    .mybutton {
-     background:none!important;
-     color:inherit;
-     border:none; 
-     padding:0!important;
-     font: inherit;
-     /*border is optional*/
-     border-bottom:1px solid #444; 
-     cursor: pointer;
-    }
-    .left-column
-    {
-        text-align: left;
-        font-weight: bold;
-    }
-    .rc::before{
-      content:":";
-    }
-    </style>
+    <link href="{% static 'reviewer/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'reviewer/tabs.css' %}" rel="stylesheet">
+    <link href="{% static 'reviewer/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
   </head>
-  <body>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="mainNav">
-          <div class="container">
-            <a class="navbar-brand js-scroll-trigger" href="{% url 'track_chair:index' %}"><b>Conference Chair</b></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-              <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger" href="{% url 'authentication:index' %}">Back</a>
-                          </li>
-                <li class="nav-item">
-                  <a class="nav-link js-scroll-trigger" href="{% url 'payment_app:index' %}">Pay Fee</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link js-scroll-trigger" href="{% url 'authentication:logout_view' %}">Logout</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-      <header class="page-heading">
-             <div style="padding-left: 10px;padding-right: 10px;background-color: black;"class="card">
-                      <div class="card-body">
-                      <div style="padding: 20px"class="card-title text-center text-white">
-                              <div class="col-lg-12">
-                                  <h4 style="color: white;"class="page-header">Approvals Overview</h4>
-                                  <hr style="background-color:white;height: 1px;" width=150px>
-                              </div>
-                              <br>
-                            <div class="col-lg-12">
-                               <i class="fa fa-bar-chart-o fa-3x"></i>
-                               <h5 style="font-size: 40px">{{total_tracks}}</h5>
-                               <h5>Total Tracks</h5> 
-                            </div>
-                              <!-- /.col-lg-12 -->
-                      </div>
-                      <div class="card-text">
-                          <div class="row text-center">
-                              
-                              <div class="col-sm-4">
-                                <div class="card">
-                                  <div class="card-body">
-                                    <h5 class="card-title"style="font-size: 40px" >{{other_tracks}}</h5>
-                                    <p class="card-text">Other tracks</p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-sm-4">
-                                    <div class="card">
-                                      <div class="card-body">
-                                        <h5 class="card-title"style="font-size: 40px" >{{no_tracks_under_permission}}</h5>
-                                        <p class="card-text">Tracks under permission</p>
-                                      </div>
-                                    </div>
-                                </div>
-                              <div class="col-sm-4">
-                                <div class="card">
-                                  <div class="card-body">
-                                    <h5 class="card-title" style="font-size: 40px">{{no_approved_tracks}}</h5>
-                                    <p class="card-text">Approved tracks</p>
-                                  </div>
-                                </div>
-                              </div>
-                      </div>
-                      </div>
-                      </div>
-              </div>    
-      </header>
-      <div class="container">
-            {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <div class="alert alert-info alert-dismissible">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>Info! &nbsp;</strong>{{ message }}
-                  </div>
-                {% endfor %}
-            </ul>
-            {% endif %}
-       </div>
-            
-        <!--<h2 style="padding-top: 1px;font-family: 'SFMono-Regular',Consolas,'Liberation Mono',Menlo,Courier,monospace;" class="text-center">
-            Your Submissions
-        </h2>-->
-            
-        {% for track in tracks %}
-        {% if track.permission_requested %}
-        <div class="card">
-            <div class="card-body">
-              <h5 style="padding-bottom:3px; border-bottom:1px solid #444;"  class="card-title">{{ track.paper.title }}</h5>
-              <div class="row">
-                    <div class="col-lg-8">
-                  <h6 ><em>authored by </em>{{track.paper.authors}}</h6>
-                  </div>
-                  <div class="col-lg-4">
-                  <em>Submitted on&nbsp;</em>{{track.paper.submission_date}}
-                  </div>
-                  </div>
-                <br>
-                <div class="row">
-                <div class="col-md-6">
-                        <table class="table table-sm">
-                                <tbody>
-                                  <tr>
-                                    <td><em>Reviewer</em></td>
-                                    <td>{{ track.reviewer.username }}</td>
-                                    
-                                  </tr>
-                                  <tr>
-                                    <td><em>Track Chair</em></td>
-                                    <td>{{ track.track_chair.username }}</td>
-                                  </tr>
-                                  <tr>
-                                      <td><em>Status</em></td>
-                                      <td>Not permitted</td>
-                                    </tr>
-                                </tbody>
-                              </table> 
-                </div>
-              <div class="col-md-6">
-                  <div class="row">
-                        <div class="col-md-4">
-                        <div class="row">
-                             <i class="fa fa-folder-open fa-3x"></i>
-                        </div>
-                          <div class="row">
-                          <a style="color:black;" target="_blank" href="{{track.paper.docfile.url}}">&nbsp; Read Paper</a>    
-                          </div>
-                        </div>  
-                        <div class="col-md-4">
-                                <div class="row">
-                                       
-                                    <i class="fa fa-list-alt fa-3x"></i>
-                                </div>
-                                    <div class="row">
-                                    <a style="color:black;" href="{% url 'conference_chair:show_report' track.id %}">View report</a>    
-                                    
-                                </div>  
-                              
-                        </div>
 
-                        <div class="col-md-4">
-                                <div class="row">
-                                       
-                                    <i class="fa fa-check fa-3x"></i>
-                                </div>
-                                    <div class="row">
-                                    <a style="color:black;" href="{% url 'conference_chair:give_permission' track.id %}">Approve Track</a>    
-                                    
-                                </div>  
-                              
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <h2 style="color:aliceblue;">Conference Chair</h2>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'conference_chair:index' %}">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'authentication:index' %}">Back</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <section id="tabs">
+        <div class="container">
+            <br>
+            <div class="row">
+                <div class="col-xs-12 ">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true"><i class="fa-"></i>All Tracks</a>
+                            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false"></a>
+                            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false"></a>
                         </div>
+                    </nav>
+                    <div class="tab-content py-3 px-3" id="nav-tabContent">
+                        {% for track in tracks %}
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                          <div class="p_item">
+                            <h6>{{track.track_chair}}</h6>
+                            <div class="row">
+                              <div class="col-lg-12">
+                                  written by {{track.author}}
+                              </div>
+                            </div>
+                            <div class="row">
+                                    <div class="col-lg-12">
+                                        reviewed by {{track.reviewer}}
+                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                      <i class="fa fa-check"></i>
+                                      <a style="color:black;"href="#">Approve Track</a>
+                                </div>
+                                <div class="col-lg-6"> 
+                                            <i class="fa fa-folder-open"></i>
+                                            <a style="color:black;"href="#">Show Track</a>
+                                </div>
+                            </div>    
+
+                            </div>
+                        </div>
+                        {% endfor %}
+                         <!--
+                        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                            {% for report in reports %}
+                            <div class="p_item">
+                                    <h6>{{report.description}}</h6>
+                                    <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="row">
+                                                  <div class="col-lg-2">  
+                                                  <i class="fa fa-folder-open"></i>
+                                                  </div>
+                                                  <div class="col-lg-8"><a style="color:black;" data-toggle="modal" data-target="#reviewCreate" href="#">Edit report</a></div>
+                                                </div>
+                                            </div>    
+                                    </div>
+                            </div>
+                            {% endfor %}
+                        
+                        </div>    
+                        -->                   
+                    </div>
                 </div>
-                </div>
-              </div>
             </div>
         </div>
-        <br>
-        {% endif %}
-        {% endfor %}
-        {% for track in tracks %}
-        {% if track.track_approved %}
-        <div class="card">
-            <div class="card-body">
-              <h5 style="padding-bottom:3px; border-bottom:1px solid #444;"  class="card-title">{{ track.paper.title }}</h5>
-              <div class="row">
-                    <div class="col-lg-8">
-                  <h6 ><em>authored by </em>{{track.paper.authors}}</h6>
-                  </div>
-                  <div class="col-lg-4">
-                  <em>Submitted on&nbsp;</em>{{track.paper.submission_date}}
-                  </div>
-                  </div>
-                <br>
-                <div class="row">
-                <div class="col-md-6">
-                        <table class="table table-sm">
-                                <tbody>
-                                  <tr>
-                                    <td><em>Reviewer</em></td>
-                                    <td>{{ track.reviewer.username }}</td>
-                                    
-                                  </tr>
-                                  <tr>
-                                    <td><em>Track Chair</em></td>
-                                    <td>{{ track.track_chair.username }}</td>
-                                  </tr>
-                                  <tr>
-                                      <td><em>Status</em></td>
-                                      <td>Approved</td>
-                                    </tr>
-                                </tbody>
-                              </table> 
+        </section>
+    <div class="modal" id="reviewCreate">
+            <div class="modal-dialog">
+              <div class="modal-content">
+              
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h4 class="modal-title">Review Form</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <div class="col-md-6">
-                        <div class="row">
-                              <div class="col-md-4">
-                              <div class="row">
-                                   <i class="fa fa-folder-open fa-3x"></i>
-                              </div>
-                                <div class="row">
-                                <a style="color:black;" target="_blank" href="{{track.paper.docfile.url}}">&nbsp; Read Paper</a>    
+                
+                <!-- Modal body -->
+                <div class="modal-body">
+                        <form action="" method="POST">
+                                {% csrf_token %}
+                                <div class="form-row">
+                                    <label class="col-md-6 col-form-label">Problem Statement</label>
+                                    <div class="col-md-6">
+                                           {{form.problem_statement}}
+                                    </div> 
                                 </div>
-                              </div>  
-                              <div class="col-md-4">
-                                      <div class="row">
-                                             
-                                          <i class="fa fa-list-alt fa-3x"></i>
-                                      </div>
-                                          <div class="row">
-                                          <a style="color:black;" href="{% url 'conference_chair:show_report' track.id %}">View report</a>    
-                                          
-                                      </div>  
-                                    
-                              </div>
-      
-                              <div class="col-md-4">
-                                      <div class="row">
-                                             
-                                          <i class="fa fa-close fa-3x"></i>
-                                      </div>
-                                          <div class="row">
-                                          <a style="color:black;" href="{% url 'conference_chair:reject_permission' track.id %}">Reject Track</a>    
-                                          
-                                      </div>  
-                                    
-                              </div>
-                      </div>
-                      </div>
-        </div>
-        <br>
-        {% endif %}
-        {% endfor %}
-      </div> 
-      <br> 
-      </body>
-     <!-- Bootstrap core JavaScript -->
-     <script src="{% static 'author/bootstrap/jquery/jquery.min.js' %}"></script>
-     <script src="{% static 'author/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    
+                                <br>
+    
+                                <div class="form-row">
+                                    <label class="col-md-6 col-form-label">Research Significance</label>
+                                    <div class="col-md-6">
+                                           {{form.research_sig}}
+                                    </div> 
+                                </div>
+    
+                                <br>
+    
+                                <div class="form-row">
+                                    <label class="col-md-6 col-form-label">Literature review</label>
+                                    <div class="col-md-6">
+                                            {{form.lit_review}}
+                                    </div> 
+                                </div>
+                            
+                                <br>     
+    
+                                <div class="form-row">
+                                        <label class="col-md-6 col-form-label">Methodology</label>
+                                        <div class="col-md-6">
+                                                {{form.methodology}}
+                                        </div> 
+                                </div>
+                                <br>
+                                <div class="form-row">
+                                        <label class="col-md-6 col-form-label">Description</label>
+                                        <div class="col-md-6">
+                                                {{form.description}}
+                                        </div> 
+                                </div>
+                                <br>
+                                
+                                <div class="text-center"> 
+                                    <button type="submit" class="btn btn-secondary" href = "{% url 'reviewer:index' %}">Submit</button>
+                                </div>
+                        </form>
+                </div>
+                
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>    
+            </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'reviewer/bootstrap/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'reviewer/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  </body>
+
 </html>

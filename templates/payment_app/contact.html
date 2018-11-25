@@ -1,0 +1,97 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Contact Us</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'reviewer/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'reviewer/tabs.css' %}" rel="stylesheet">
+    <link href="{% static 'reviewer/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <h2 style="color:aliceblue;">Contact Us</h2>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'track_chair:index' %}">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'authentication:index' %}">Back</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <section id="tabs">
+        <div class="container">
+          <div class="row">
+              <div class="col">
+
+              </div>
+              <div class="col-8">
+                  <div class="container-fluid" style="margin-top:10%;">
+                          <form action="" method="POST">
+                                  {% csrf_token %}
+                                  <div class="form-group row">
+                                      <label class="col-sm-2 col-form-label">Email ID</label>
+                                      <div class="col-sm-10">
+                                              <input type="text" name="email_id" class="form-control" required>
+                                      </div>
+                                  </div>
+
+                                  <br>
+
+                                  <div class="form-group row">
+                                      <label class="col-sm-2 col-form-label">Subject</label>
+                                      <div class="col-sm-10">
+                                              <input type="text" name="subject" class="form-control" required>
+                                      </div>
+                                  </div>
+
+                                  <br>
+
+                                  <div class="form-group row">
+                                          <label class="col-sm-2 col-form-label">Message</label>
+                                          <div class="col-sm-10">
+                                                  <input type="textarea" name="message" class="form-control" required>
+                                          </div>
+                                  </div>
+
+                                  <br>
+
+                                  <div class="text-center">
+                                      <button type="submit" class="btn btn-secondary">Send</button>
+                                  </div>
+                          </form>
+                  </div>
+              </div>
+              <div class="col">
+
+              </div>
+          </div>
+        </div>
+        </section>
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'reviewer/bootstrap/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'reviewer/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  </body>
+
+</html>

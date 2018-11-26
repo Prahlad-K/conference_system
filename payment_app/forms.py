@@ -17,5 +17,8 @@ class collectPaymentForm(forms.Form):
 
         return data
 
-        
-    
+class ContactForm(forms.Form):
+    email_id = forms.CharField(help_text = "abc@xyz.com",required=True)
+    #contact_number = forms.IntegerField()
+    subject = forms.CharField(max_length=20)
+    message = forms.CharField(widget=forms.Textarea, required=True)

@@ -70,51 +70,27 @@
                     <div class="container-fluid" style="margin-top:10%;">
                                 <form action="{% url 'reviewer:edit' track_id %}" method="POST">
                                                 {% csrf_token %}
-                                                <div class="form-row">
-                                                    <label class="col-md-6 col-form-label">Problem Statement</label>
-                                                    <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Problem Statement</label>
                                                             {{form.problem_statement}}
-                                                    </div> 
                                                 </div>
-                                
-                                                <br>
-                                
-                                                <div class="form-row">
-                                                    <label class="col-md-6 col-form-label">Research Significance</label>
-                                                    <div class="col-md-6">
-                                                            {{form.research_sig}}
-                                                    </div> 
+                                                <div class="form-group">
+                                                    <label>Research Significance</label>
+                                                            {{form.research_sig}} 
                                                 </div>
-                                
-                                                <br>
-                                
-                                                <div class="form-row">
-                                                    <label class="col-md-6 col-form-label">Literature review</label>
-                                                    <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Literature review</label>
                                                             {{form.lit_review}}
-                                                    </div> 
                                                 </div>
-                                            
-                                                <br>     
-                                
-                                                <div class="form-row">
-                                                        <label class="col-md-6 col-form-label">Methodology</label>
-                                                        <div class="col-md-6">
+                                                <div class="form-group">
+                                                        <label>Methodology</label>
                                                                 {{form.methodology}}
-                                                        </div> 
                                                 </div>
-                                                <br>
-                                                <div class="form-row">
-                                                        <label class="col-md-6 col-form-label">Description</label>
-                                                        <div class="col-md-6">
+                                                <div class="form-group">
+                                                        <label>Description</label>
                                                                 {{form.description}}
-                                                        </div> 
                                                 </div>
-                                                <br>
-                                                
-                                                <div class="text-center"> 
-                                                    <button type="submit" class="btn btn-secondary" href = "{% url 'reviewer:index' %}">Submit</button>
-                                                </div>
+                                                <button type="submit" class="btn btn-outline-primary">Submit</button>
                                         </form>
                     </div>
                 </div>

@@ -18,14 +18,30 @@
                                       </div>
                                 {% endif %}
                                 <div class="form-group row">
-                                    <label for="conference" class="col-sm-2 col-form-label">Conference Manager</label>
+                                        <label for="conference" class="col-sm-2 col-form-label">Conference Manager</label>
+                                        <div class="col-sm-10">
+                                                <select class="form-control" name="conference_manager" required>
+                                                    {% for conference_manager in conference_managers %}
+                                                    {% if conference_manager == conference.conference_manager %}
+                                                        <option value={{conference_manager.username}} selected>{{ conference_manager.first_name}} {{ conference_manager.last_name }}</option>
+                                                    {% else %}
+                                                    <option value={{conference_manager.username}}>{{ conference_manager.first_name}} {{ conference_manager.last_name }}</option>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                        </div>
+                                            
+                                    </div>
+                                    <br>
+                                <div class="form-group row">
+                                    <label for="conference" class="col-sm-2 col-form-label">Registration Manager</label>
                                     <div class="col-sm-10">
                                             <select class="form-control" name="conference_manager" required>
-                                                {% for conference_manager in conference_managers %}
-                                                {% if conference_manager == conference.conference_manager %}
-                                                    <option value={{conference_manager.username}} selected>{{ conference_manager.first_name}} {{ conference_manager.last_name }}</option>
+                                                {% for registration_manager in registration_managers %}
+                                                {% if registration_manager == conference.registration_manager %}
+                                                    <option value={{registration_manager.username}} selected>{{ registration_manager.first_name}} {{ registration_manager.last_name }}</option>
                                                 {% else %}
-                                                <option value={{conference_manager.username}}>{{ conference_manager.first_name}} {{ conference_manager.last_name }}</option>
+                                                <option value={{registration_manager.username}}>{{ registration_manager.first_name}} {{ registration_manager.last_name }}</option>
                                                 {% endif %}
                                                 {% endfor %}
                                             </select>
@@ -33,6 +49,7 @@
                                         
                                 </div>
                                 <br>
+
                                 <div class="form-group row">
                                         <label for="conference" class="col-sm-2 col-form-label">Conference Chair</label>
                                         <div class="col-sm-10">

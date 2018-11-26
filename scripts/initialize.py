@@ -5,7 +5,7 @@ from django.contrib.auth.models import Group
 
 def run():
     # Create super user
-    u = CustomUser.objects.create_superuser(username = 'superuser1', email='123@gmail.com', password = 'Group@123')
+    u = CustomUser.objects.create_superuser(username = 'superuser1', email='123@gmail.com', password = 'Group@123', validated = True)
 
     print("\nSuperuser with the following details created - \nusername : superuser1 \npassword : Group@123\n")
 

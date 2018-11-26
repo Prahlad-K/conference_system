@@ -14,27 +14,30 @@ def index(request):
 
 def create_conference(request):
     if request.method == "GET":
-        conference_managers = CustomUser.objects.filter(roles__id = 6)
+        registration_managers = CustomUser.objects.filter(roles__id = 5)
         conference_chairs = CustomUser.objects.filter(roles__id = 4)
+        conference_managers = CustomUser.objects.filter(roles__id=6)
         types = ConferenceTypes.objects.all()
 
         response = {}
+        response['registration_managers'] = registration_managers
         response['conference_managers'] = conference_managers
         response['conference_chairs'] = conference_chairs
         response['types'] = types
 
         return render(request, 'conference_manager/create_conference.html', response)
     elif request.method == "POST":
-        conference_manager = CustomUser.objects.get(username = request.POST['conference_manager'])
+        registration_manager = CustomUser.objects.get(username = request.POST['registration_manager'])
         conference_chair = CustomUser.objects.get(username = request.POST['conference_chair'])
-        conference = Conference.objects.create(conference_chair = conference_chair, conference_manager = conference_manager, conference_name = request.POST['name'], conference_date = request.POST['date'], conference_type = ConferenceTypes.objects.get(id = request.POST['type']))
+        conference = Conference.objects.create(conference_manager = CustomUser.objects.get(is_superuser = True), conference_chair = conference_chair, registration_manager = registration_manager, conference_name = request.POST['name'], conference_date = request.POST['date'], conference_type = ConferenceTypes.objects.get(id = request.POST['type']))
         conference.save()
         types = ConferenceTypes.objects.all()
-        conference_managers = CustomUser.objects.filter(roles__id = 6)
+        registration_managers = CustomUser.objects.filter(roles__id = 5)
         conference_chairs = CustomUser.objects.filter(roles__id = 4)
-
+        conference_managers = CustomUser.objects.filter(roles__id=6)
         response = {}
         response['success'] = True
+        response['registration_managers'] = registration_managers
         response['conference_managers'] = conference_managers
         response['conference_chairs'] = conference_chairs
         response['types'] = types
@@ -43,32 +46,36 @@ def create_conference(request):
 def view_conference(request, pk):
     if request.method == "GET":
         conference = Conference.objects.get(pk = pk)
-        conference_managers = CustomUser.objects.filter(roles__id = 6)
+        registration_managers = CustomUser.objects.filter(roles__id = 5)
         conference_chairs = CustomUser.objects.filter(roles__id = 4)
+        conference_managers = CustomUser.objects.filter(roles__id=6)
         types = ConferenceTypes.objects.all()
         response = {
             'conference': conference,
-            'conference_managers': conference_managers, 
+            'registration_managers': registration_managers, 
             'conference_chairs': conference_chairs,
+            'conference_managers':conference_managers,
             'types': types,
         }
         return render(request, 'conference_manager/view_conference.html', response)
     elif request.method == "POST":
         print(request.POST)
         conference = Conference.objects.get(pk = pk)
-        conference.conference_manager = CustomUser.objects.get(username=request.POST['conference_manager'])
+        conference.registration_manager = CustomUser.objects.get(username=request.POST['registration_manager'])
         conference.conference_chair = CustomUser.objects.get(username=request.POST['conference_chair'])
         conference.conference_name = request.POST['name']
         conference.conference_date = request.POST['date']
         conference.conference_type = ConferenceTypes.objects.get(id = request.POST['type'])
+        conference.conference_manager = CustomUser.objects.get(is_superuser = True)
         conference.save()
         types = ConferenceTypes.objects.all()
-        conference_managers = CustomUser.objects.filter(roles__id = 6)
+        registration_managers = CustomUser.objects.filter(roles__id = 5)
         conference_chairs = CustomUser.objects.filter(roles__id = 4)
-
+        conference_managers = CustomUser.objects.filter(roles__id=6)
         response = {}
         response['success'] = True
         response['conference'] = conference
+        response['registration_managers'] = registration_managers
         response['conference_managers'] = conference_managers
         response['conference_chairs'] = conference_chairs
         response['types'] = types

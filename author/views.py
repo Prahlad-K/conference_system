@@ -45,7 +45,7 @@ def index(request):
             paid = True
     
     if not paid:
-        manager = CustomUser.objects.get(roles = Role.objects.get(id = 6), is_superuser = False)
+        manager = CustomUser.objects.get(roles = Role.objects.get(id = 6))
         conference = Conference.objects.get(conference_manager = manager)
         response = {}
         response['conference'] = conference
@@ -63,20 +63,25 @@ def index(request):
            #selects random reviewer
             print(revs)
 
-            index = random.randint(0,len(revs)-1)
-            track.reviewer = revs[index]
+            if len(revs)!=0:
+                index = random.randint(0,len(revs)-1)
+                track.reviewer = revs[index]
 
-            trcs = CustomUser.objects.filter(roles = Role.objects.get(id=3), is_superuser = False)
-           #selects random track chair
-            print(trcs)
-
-            index = random.randint(0,len(trcs)-1)
-            track.track_chair = trcs[index]
-            
-            track.paper = m
-            track.paper_submitted = True
-            track.save()
-            messages.info(request, 'Your response has been recorded successfully!')
+                trcs = CustomUser.objects.filter(roles = Role.objects.get(id=3), is_superuser = False)
+            #selects random track chair
+                print(trcs)
+                if len(trcs)!=0:
+                    index = random.randint(0,len(trcs)-1)
+                    track.track_chair = trcs[index]
+                    
+                    track.paper = m
+                    track.paper_submitted = True
+                    track.save()
+                    messages.info(request, 'Your response has been recorded successfully!')
+                else:
+                    messages.info(request, 'There are no track chairs available. We regret the inconvenience caused.')
+            else:
+                messages.info(request, 'There are no reviewers available. We regret the inconvenience caused.')
             tracks = Track.objects.filter(author=request.user)
             total_tracks = len(tracks)
 

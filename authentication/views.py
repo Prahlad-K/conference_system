@@ -27,7 +27,7 @@ def choose_profile(request, user):
             superuser= True
         return render(request, 'authentication/error_page.html', {'superuser':superuser})
     else:
-        manager = CustomUser.objects.get(roles = Role.objects.get(id = 6), is_superuser = False)
+        manager = CustomUser.objects.get(roles = Role.objects.get(id = 6))
         conference = Conference.objects.get(conference_manager = manager)
         response['conference'] = conference
         return render(request, 'authentication/main_page.html', response)
@@ -63,9 +63,43 @@ def sign_up(request):
         return render(request, 'authentication/sign_up.html', response)
     elif request.method == "POST":
         print(request.POST)
-        u = CustomUser.objects.create(validated=False,username=request.POST['username'], first_name = request.POST['first_name'], last_name = request.POST['last_name'], email=request.POST['email'])
+        u = CustomUser.objects.create(username=request.POST['username'], first_name = request.POST['first_name'], last_name = request.POST['last_name'], email=request.POST['email'])
         u.set_password(request.POST['password'])
+        
+        try:
+            value = request.POST['Author']
+            u.roles.add(Role.objects.get(id=1))
+        except:
+            pass
+        try:
+            value = request.POST['Reviewer']
+            u.roles.add(Role.objects.get(id=2))
+        except:
+            pass
+        try:
+            value = request.POST['Track Chair']
+            u.roles.add(Role.objects.get(id=3))
+        except:
+            pass
+        try:
+            value = request.POST['Conference Chair']
+            u.roles.add(Role.objects.get(id=4))
+        except:
+            pass
+        try:
+            value = request.POST['Registration Manager']
+            u.roles.add(Role.objects.get(id=5))
+        except:
+            pass
+        try:
+            value = request.POST['Conference Manager']
+            u.roles.add(Role.objects.get(id=6))
+        except:
+            pass
         u.save()
-        u.roles.add(Role.objects.get(id = request.POST['role']))
         roles = Role.objects.all()
-        return render(request, 'authentication/validation_page.html',{})
+        response = {
+            'success': True,
+            'roles': roles
+        }
+        return render(request, 'authentication/validation_page.html')

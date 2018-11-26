@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Conference Chair</title>
+    <title>Track Chair</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{% static 'author/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -49,7 +49,7 @@
   <body>
       <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="mainNav">
           <div class="container">
-            <a class="navbar-brand js-scroll-trigger" href="{% url 'conference_chair:index' %}"><b>Conference Chair</b></a>
+            <a class="navbar-brand js-scroll-trigger" href="{% url 'track_chair:index' %}"><b>Conference Chair</b></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -68,29 +68,70 @@
             </div>
           </div>
         </nav>
-        <div class="card mx-auto" style="padding-bottom:20px;margin-bottom: 50px; width: 60rem;">
-                <div class="card-body">
-
-                        <div class="col">
-        
-                        </div>
-                        <div class="col-8">
-                            <div class="container-fluid" style="margin-top:10%;">
-                            <h2>Review Report for "{{track.paper.title}}:"</h2>
-                            <br>
-                            <h3><em>Problem Statement: </em>{{track.report.problem_statement}}</h3>
-                            <br>
-                            <h3><em>Research Significance: </em>{{track.report.research_sig}}</h3>
-                            <br>
-                            <h3><em>Literature review:</em> {{track.report.lit_review}}</h3>
-                            <br>
-                            <h3><em>Methodology: </em>{{track.report.methodology}}</h3>
-                            <br>
-                            <h3><em>Description: </em>{{track.report.description}}</h3>
-                            <br>
-                            </div>
-                        </div>
-                </div>
-        </div>
+        <div class="container">
+          <h2 style="padding-top: 1px;font-family:'Rubik',sans-serif;"class="h00-mktg lh-condensed mt-3 mb-2 text-center">
+                  Review Report 
+          </h2>
+          <p style="font-family: 'Open Sans',Verdana,sans-serif;"class="text-gray text-center">
+          for {{track.paper.title}}
+          </p>
+           <br>
+          <div class="card mx-auto" style="padding-bottom:20px;margin-bottom: 50px; width: 60rem;">
+          <div class="card-body">
+              <div class="row">
+                  <div class="col">
+  
+                  </div>
+                  <div class="col-8">
+                      <div class="container-fluid" style="margin-top:10%;">
+                                      <div class="form-group">
+                                          <label>Problem Statement </label>
+                                          <div class="card">
+                                            <div class="card-body">
+                                              {{track.report.problem_statement}} 
+                                            </div>
+                                          </div>
+                                      </div>
+                                      <div class="form-group">
+                                          <label>Research Significance</label>
+                                          <div class="card">
+                                            <div class="card-body">
+                                              {{track.report.research_sig}}
+                                            </div>
+                                          </div>
+                                      </div>       
+                                      <div class="form-group">             
+                                              <label >Literature review</label>
+                                              <div class="card">
+                                                <div class="card-body">
+                                                  {{track.report.lit_review}}
+                                                </div>
+                                              </div>
+                                      </div>
+                                      <div class="form-group">             
+                                        <label >Methodology</label>
+                                        <div class="card">
+                                          <div class="card-body">
+                                            {{track.report.methodology}}
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="form-group">             
+                                        <label >Description</label>
+                                        <div class="card">
+                                          <div class="card-body">
+                                            {{track.report.description}}
+                                          </div>
+                                        </div>
+                                       </div>
+                      </div>
+                  </div>
+                  <div class="col">
+                  
+                  </div>
+              </div>
+          </div>
+          </div>
+          </div>
     </body>
 </html>

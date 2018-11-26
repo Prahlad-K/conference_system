@@ -23,7 +23,8 @@ def approve(request, payment_id):
     payment.save()
     payments = Payment.objects.all()
     roles = request.user.roles.all()
-    return render(request, 'registration_manager/display.html',  {'payments':payments, 'roles':roles})
+    users = CustomUser.objects.all()
+    return render(request, 'registration_manager/display.html',  {'payments':payments, 'roles':roles, 'users':users})
 
 def approve_user(request, user_id):
     user_ = get_object_or_404(CustomUser, pk = user_id)
@@ -40,4 +41,5 @@ def delete(request, payment_id):
     print(payment_id)
     payments = Payment.objects.all()
     roles = request.user.roles.all()
-    return render(request, 'registration_manager/display.html',  {'payments':payments, 'roles':roles})
+    users = CustomUser.objects.all()
+    return render(request, 'registration_manager/display.html',  {'payments':payments, 'roles':roles, 'users':users})

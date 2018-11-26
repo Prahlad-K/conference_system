@@ -39,5 +39,6 @@ class Conference(models.Model):
     conference_name = models.TextField(blank = True, null = True)
     conference_date = models.DateField()
     conference_type = models.ForeignKey(ConferenceTypes, on_delete = models.CASCADE)
-    conference_manager = models.ForeignKey(CustomUser, on_delete = models.CASCADE, related_name='conference_manager')
+    registration_manager = models.ForeignKey(CustomUser, on_delete = models.CASCADE, related_name='registration_manager', null = True)
     conference_chair = models.ForeignKey(CustomUser, on_delete = models.CASCADE, related_name='conference_chair')
+    conference_manager = models.ForeignKey(CustomUser, on_delete = models.CASCADE, related_name='conference_manager')

@@ -17,14 +17,12 @@ PERF_CHOICES = (
 class ReviewForm(forms.ModelForm):  
     error_css_class = 'error'
 
-    problem_statement = forms.ChoiceField(choices=PERF_CHOICES, required=True )
-    research_sig = forms.ChoiceField(choices=PERF_CHOICES, required=True )
-    lit_review = forms.ChoiceField(choices=PERF_CHOICES, required=True )
-    methodology = forms.ChoiceField(choices=PERF_CHOICES, required=True )
+    problem_statement = forms.ChoiceField(choices=PERF_CHOICES, required=True)
+    research_sig = forms.ChoiceField(choices=PERF_CHOICES, required=True)
+    lit_review = forms.ChoiceField(choices=PERF_CHOICES, required=True)
+    methodology = forms.ChoiceField(choices=PERF_CHOICES, required=True)
     description = forms.CharField(max_length=200)
     
     class Meta:
         model = ReviewReport
         fields = ['problem_statement', 'research_sig', 'lit_review', 'methodology', 'description']
-        
-    

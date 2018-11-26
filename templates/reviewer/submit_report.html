@@ -70,21 +70,26 @@
                     <div class="container-fluid" style="margin-top:10%;">
                                 <form action="{% url 'reviewer:edit' track_id %}" method="POST">
                                                 {% csrf_token %}
-                                                <div class="form-group">
-                                                    <label>Problem Statement</label>
-                                                            {{form.problem_statement}}
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label>Problem Statement</label>
+                                                                {{form.problem_statement}}
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label>Research Significance</label>
+                                                                {{form.research_sig}} 
+                                                    </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label>Research Significance</label>
-                                                            {{form.research_sig}} 
-                                                </div>
-                                                <div class="form-group">
+                                                
+                                                <div class="form-row">
+                                                <div class="form-group col-md-6">
                                                     <label>Literature review</label>
                                                             {{form.lit_review}}
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group col-md-6">
                                                         <label>Methodology</label>
                                                                 {{form.methodology}}
+                                                </div>
                                                 </div>
                                                 <div class="form-group">
                                                         <label>Description</label>

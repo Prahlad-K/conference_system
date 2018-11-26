@@ -4,81 +4,11 @@ from django.shortcuts import get_object_or_404, render, redirect
 from authentication.models import *
 from django.http import HttpResponse
 from .models import *
+from email_system import urls
 # Create your views here.
 
 def index(request):
-    response = {}
-    conferences = Conference.objects.all()
-    response['conferences'] = conferences
-    return render(request, 'conference_manager/index.html', {'conferences':conferences})
-
-def create_conference(request):
-    if request.method == "GET":
-        conference_managers = CustomUser.objects.filter(roles__id = 6)
-        conference_chairs = CustomUser.objects.filter(roles__id = 4)
-        types = ConferenceTypes.objects.all()
-
-        response = {}
-        response['conference_managers'] = conference_managers
-        response['conference_chairs'] = conference_chairs
-        response['types'] = types
-
-        return render(request, 'conference_manager/create_conference.html', response)
-    elif request.method == "POST":
-        conference_manager = CustomUser.objects.get(username = request.POST['conference_manager'])
-        conference_chair = CustomUser.objects.get(username = request.POST['conference_chair'])
-        conference = Conference.objects.create(conference_chair = conference_chair, conference_manager = conference_manager, conference_name = request.POST['name'], conference_date = request.POST['date'], conference_type = ConferenceTypes.objects.get(id = request.POST['type']))
-        conference.save()
-        types = ConferenceTypes.objects.all()
-        conference_managers = CustomUser.objects.filter(roles__id = 6)
-        conference_chairs = CustomUser.objects.filter(roles__id = 4)
-
-        response = {}
-        response['success'] = True
-        response['conference_managers'] = conference_managers
-        response['conference_chairs'] = conference_chairs
-        response['types'] = types
-        return render(request, 'conference_manager/create_conference.html', response)
-
-def view_conference(request, pk):
-    if request.method == "GET":
-        conference = Conference.objects.get(pk = pk)
-        conference_managers = CustomUser.objects.filter(roles__id = 6)
-        conference_chairs = CustomUser.objects.filter(roles__id = 4)
-        types = ConferenceTypes.objects.all()
-        response = {
-            'conference': conference,
-            'conference_managers': conference_managers, 
-            'conference_chairs': conference_chairs,
-            'types': types,
-        }
-        return render(request, 'conference_manager/view_conference.html', response)
-    elif request.method == "POST":
-        print(request.POST)
-        conference = Conference.objects.get(pk = pk)
-        conference.conference_manager = CustomUser.objects.get(username=request.POST['conference_manager'])
-        conference.conference_chair = CustomUser.objects.get(username=request.POST['conference_chair'])
-        conference.conference_name = request.POST['name']
-        conference.conference_date = request.POST['date']
-        conference.conference_type = ConferenceTypes.objects.get(id = request.POST['type'])
-        conference.save()
-        types = ConferenceTypes.objects.all()
-        conference_managers = CustomUser.objects.filter(roles__id = 6)
-        conference_chairs = CustomUser.objects.filter(roles__id = 4)
-
-        response = {}
-        response['success'] = True
-        response['conference'] = conference
-        response['conference_managers'] = conference_managers
-        response['conference_chairs'] = conference_chairs
-        response['types'] = types
-        return render(request, 'conference_manager/view_conference.html', response)
-
-def view_conferences(request):
-    conferences = Conference.objects.all()
-    response = {}
-    response['conferences'] = conferences
-    return render(request, 'conference_manager/view_conferences.html', response)
+    return render(request, 'conference_manager/index.html', {})
 
 def create_track(request):
     if request.method == "GET":
@@ -125,38 +55,8 @@ def add_user(request):
         print(request.POST)
         u = CustomUser.objects.create(username=request.POST['username'], first_name = request.POST['first_name'], last_name = request.POST['last_name'], email=request.POST['email'])
         u.set_password(request.POST['password'])
-        
-        try:
-            value = request.POST['Author']
-            u.roles.add(Role.objects.get(id=1))
-        except:
-            pass
-        try:
-            value = request.POST['Reviewer']
-            u.roles.add(Role.objects.get(id=2))
-        except:
-            pass
-        try:
-            value = request.POST['Track Chair']
-            u.roles.add(Role.objects.get(id=3))
-        except:
-            pass
-        try:
-            value = request.POST['Conference Chair']
-            u.roles.add(Role.objects.get(id=4))
-        except:
-            pass
-        try:
-            value = request.POST['Registration Manager']
-            u.roles.add(Role.objects.get(id=5))
-        except:
-            pass
-        try:
-            value = request.POST['Conference Manager']
-            u.roles.add(Role.objects.get(id=6))
-        except:
-            pass
         u.save()
+        u.roles.add(Role.objects.get(id = request.POST['role']))
         roles = Role.objects.all()
         response = {
             'success': True,
@@ -176,7 +76,7 @@ def view_users(request):
 
 def view_user(request, username):
     if request.method == "GET":
-        try: 
+        try:
             user = CustomUser.objects.get(username=username)
             user.r = user.roles.all()
             all_roles = Role.objects.all()
@@ -193,7 +93,7 @@ def view_user(request, username):
             return view_users(request)
 
     elif request.method == "POST":
-        try: 
+        try:
             print(request.POST)
             user = CustomUser.objects.get(username=username)
             user.first_name = request.POST['first_name']
@@ -254,7 +154,7 @@ def view_track(request, pk):
         track_chairs = CustomUser.objects.filter(roles__id = 3)
         response = {
             'track': track,
-            'authors': authors, 
+            'authors': authors,
             'reviewers': reviewers,
             'track_chairs': track_chairs
         }
@@ -272,19 +172,12 @@ def view_track(request, pk):
         track_chairs = CustomUser.objects.filter(roles__id = 3)
         response = {
             'track': track,
-            'authors': authors, 
+            'authors': authors,
             'reviewers': reviewers,
             'track_chairs': track_chairs,
             'success': True
         }
         return render(request, 'conference_manager/view_track.html', response)
-
-def delete_conference(request, pk):
-    try:
-        Conference.objects.get(pk=pk).delete()
-        return view_conferences(request)
-    except:
-        return view_conferences(request)
 
 def delete_track(request, pk):
     try:

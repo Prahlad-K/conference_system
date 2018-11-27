@@ -322,10 +322,13 @@
             <div class="card-body">
               <h5 style="padding-bottom:3px; border-bottom:1px solid #444;"  class="card-title">{{ track.paper.title }}</h5>
               <div class="row">
-                  <div class="col-lg-12">
-                <h6 ><em>by </em>{{track.paper.authors}}</h6>
-                </div>
-                </div>
+                <div class="col-lg-8">
+              <h6 ><em>by </em>{{track.paper.authors}}</h6>
+              </div>
+              <div class="col-lg-4">
+              <em>Report submitted on&nbsp;</em>{{track.report.submission_date}}
+              </div>
+              </div>
               <div class="row">
               <div class="col-md-6">
                       <table class="table table-sm">
@@ -380,9 +383,13 @@
             <div class="card-body">
               <h5 style="padding-bottom:3px; border-bottom:1px solid #444;"  class="card-title">{{ track.paper.title }}</h5>
               <div class="row">
-                  <div class="col-lg-12">
-                <h6 ><em>by </em>{{track.paper.authors}}</h6>
-                </div>
+                <div class="col-lg-8">
+              <h6 ><em>by </em>{{track.paper.authors}}</h6>
+              </div>
+              <div class="col-lg-4">
+              <em>Report submitted on&nbsp;</em>{{track.report.submission_date}}
+              </div>
+              </div>
               <div class="row">
               <div class="col-md-6">
                       <table class="table table-sm">
@@ -425,6 +432,7 @@
                         </div>       
                 </div>
                 </div>
+              </div>
             </div>
         </div>
         <br>

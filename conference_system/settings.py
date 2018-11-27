@@ -45,9 +45,11 @@ INSTALLED_APPS = [
     'conference_chair',
     'conference_manager',
     'registration_manager',
-    'payment_app'
+    'payment_app',
+    'email_system',
 
 ]
+POSTMAN_AUTO_MODERATE_AS = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -125,7 +127,10 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+#FIXTURES
+FIXTURE_DIRS=[
+    os.path.join(BASE_DIR,"fixtures"),
+]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
@@ -140,3 +145,11 @@ MEDIA_URL = '/media/'
 
 #Configure customer users
 AUTH_USER_MODEL = "authentication.CustomUser" 
+#email_system
+#email
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_PASSWORD = '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'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

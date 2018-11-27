@@ -3,6 +3,11 @@ from django.contrib.auth import authenticate,login,logout
 from django.shortcuts import get_object_or_404, render, redirect
 from conference_manager.models import Track, Conference
 from .models import *
+from django.core.mail import send_mail, BadHeaderError
+from email_system import models
+from django.template.loader import get_template
+from django.template import Context
+
 # Create your views here.
 
 def index(request):
@@ -98,6 +103,19 @@ def sign_up(request):
             pass
         u.save()
         roles = Role.objects.all()
+        subject="Thank you for signing up with us!"
+        o=draft.objects.get(title="Registration")
+        message=o.text
+        to_email=request.u.email
+        username=payment.user
+        ctx={
+        'username': username,
+        'message_body': message
+        }
+        try:
+            send_mail(subject, get_template('templates_path/reg_email.html').render(ctx), 'prahladsharmak99@gmail.com', [to_email])
+        except:
+            print("Send mail failed")
         response = {
             'success': True,
             'roles': roles

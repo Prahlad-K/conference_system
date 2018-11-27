@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from conference_manager.models import Track, Conference
 from .models import *
 from django.core.mail import send_mail, BadHeaderError
-from email_system import models
+from email_system.models import draft
 from django.template.loader import get_template
 from django.template import Context
 
@@ -101,13 +101,14 @@ def sign_up(request):
             u.roles.add(Role.objects.get(id=6))
         except:
             pass
-        u.save()
+        
         roles = Role.objects.all()
         subject="Thank you for signing up with us!"
         o=draft.objects.get(title="Registration")
         message=o.text
-        to_email=request.u.email
-        username=payment.user
+        to_email=u.email
+        username=u.username
+        u.save()
         ctx={
         'username': username,
         'message_body': message

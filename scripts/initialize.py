@@ -20,6 +20,9 @@ def run():
     ConferenceTypes.objects.create(id =2)
     ConferenceTypes.objects.create(id =3)
     
+    draft.objects.create(title = 'Payment', text = 'Thanks for paying!')
+    draft.objects.create(title = 'Registration', text= 'Thanks for signing up!')
+
     print("All the roles have been assigned to the superuser. Conference types have been initialized. You may now run the server and log in.\n")
 
 

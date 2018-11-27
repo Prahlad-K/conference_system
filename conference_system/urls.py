@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include 
 from django.conf.urls import url
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,4 +30,6 @@ urlpatterns = [
     path('conference_manager/', include('conference_manager.urls', namespace="conference_manager")),
     path('payment_app/', include('payment_app.urls', namespace="payment_app")),
     path('email_system/',include('email_system.urls',namespace="email_system")),
+    
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
